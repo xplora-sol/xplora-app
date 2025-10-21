@@ -1,20 +1,20 @@
-FROM node:20-bookworm
+FROM oven/bun:1-debian
 
 # Install system dependencies including expect for unbuffer and nginx
 RUN apt-get update && apt-get install -y \
     bash git curl jq qrencode expect nginx \
  && rm -rf /var/lib/apt/lists/*
 
-# Install global npm packages
-RUN npm install -g qrcode-terminal expo-cli @expo/ngrok@^4.1.0
+# Install global packages using bun
+RUN bun add -g qrcode-terminal expo-cli @expo/ngrok@^4.1.0
 
 WORKDIR /app
 
 # Copy package files first for better caching
-COPY package*.json ./
+COPY package.json bun.lockb ./
 
 # Install dependencies (cached layer)
-RUN npm install
+RUN bun install
 
 # Copy the rest of the application
 COPY . .
