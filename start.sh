@@ -422,43 +422,63 @@ if [ "$WEB_ENABLED" = "true" ]; then
   echo "🌐 WEB INTERFACE AVAILABLE"
   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   echo ""
-  echo "🔗 Your QR code is available at:"
-  echo "   https://xplora.manjultamrakar.com.np/"
-  echo "   https://xplora.manjultamrakar.com.np/qrcode.png"
-  echo ""
-  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-fi
-echo
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "📱 Scan this QR code with Expo Go app:"
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-cat "$OUTPUT_DIR/qrcode.txt" 2>/dev/null || true
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo
-echo "🔗 Direct URL: $URL"
-echo
-echo "📡 Expo server is running. Press Ctrl+C to stop."
-echo "📋 Streaming logs below..."
-echo
-
-# Cleanup function
-cleanup() {
-  echo
-  echo "🛑 Shutting down services..."
-  if [ "$WEB_ENABLED" = "true" ]; then
-    service nginx stop 2>/dev/null || true
+  
+    echo "🔗 Your QR code is available at:"
+    if [ -n "${COOLIFY_FQDN:-}" ]; then
+      echo "   https://${COOLIFY_FQDN}/"
+      echo "   https://${COOLIFY_FQDN}/qrcode.png"
+    else
+      echo "   http://localhost/"
+      echo "   http://localhost/qrcode.png"
+    fi
+    echo ""
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   fi
-  kill $EXPO_PID 2>/dev/null || true
-  # Give it a moment to clean up
-  sleep 2
-  # Force kill if still running
-  kill -9 $EXPO_PID 2>/dev/null || true
-  rm -f "/tmp/expo_pipe_$$" 2>/dev/null || true
-  echo "✅ Cleanup complete"
-  exit 0
-}
-
-trap cleanup INT TERM EXIT
-
-# Keep script running and show logs
-tail -n +1 -f "$LOGFILE"
+  echo
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "📱 Scan this QR code with Expo Go app:"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  cat "$OUTPUT_DIR/qrcode.txt" 2>/dev/null || true
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo
+  echo "🔗 Direct URL: $URL"
+  echo
+  echo "📡 Expo server is running. Press Ctrl+C to stop."
+  echo "📋 Streaming logs below..."
+  echo
+  
+  # Health check for Coolify
+  if [ "$WEB_ENABLED" = "true" ]; then
+    (
+      while true; do
+        sleep 15
+        if ! ps -p $EXPO_PID > /dev/null; then
+          echo "🚨 Expo process died. Exiting."
+          exit 1
+        fi
+      done
+    ) &
+  fi
+  
+  # Cleanup function
+  cleanup() {
+    echo
+    echo "🛑 Shutting down services..."
+    if [ "$WEB_ENABLED" = "true" ]; then
+      service nginx stop 2>/dev/null || true
+    fi
+    # Kill the main Expo process and its children
+    if ps -p $EXPO_PID > /dev/null; then
+      kill -TERM -$EXPO_PID 2>/dev/null || true
+      sleep 2
+      kill -KILL -$EXPO_PID 2>/dev/null || true
+    fi
+    echo "✅ Cleanup complete"
+    exit 0
+  }
+  
+  trap cleanup INT TERM EXIT
+  
+  # Keep script running and show logs
+  tail -f "$LOGFILE" --pid=$EXPO_PID
+  

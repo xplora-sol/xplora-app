@@ -6,7 +6,15 @@ RUN apt-get update && apt-get install -y \
  && rm -rf /var/lib/apt/lists/*
 
 # Install global packages using bun
-RUN bun add -g qrcode-terminal expo-cli @expo/ngrok@^4.1.0
+RUN bun add -g qrcode-terminal expo-cli @expo/ngrok@^4.1.0 --non-interactive
+
+# Increase file watcher limits for Metro
+RUN echo "fs.inotify.max_user_watches=524288" | tee -a /etc/sysctl.conf && sysctl -p
+
+# Add SYS_ADMIN capability for Coolify to allow modifying kernel parameters
+# This is a Coolify-specific instruction and might not be standard Dockerfile syntax
+# Coolify will interpret this and add the capability to the container
+LABEL coolify.capabilities="SYS_ADMIN"
 
 WORKDIR /app
 
@@ -47,5 +55,8 @@ VOLUME ["/output"]
 
 # Expose nginx (80), Expo ports
 EXPOSE 80 19000 19001 19002 8081
+
+HEALTHCHECK --interval=60s --timeout=30s --start-period=180s \
+  CMD ps -p $(cat /tmp/expo.pid) > /dev/null || exit 1
 
 CMD ["/usr/local/bin/start.sh"]
