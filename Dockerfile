@@ -8,9 +8,6 @@ RUN apt-get update && apt-get install -y \
 # Install global npm packages using bun
 RUN bun add -g qrcode-terminal expo-cli --non-interactive
 
-# Increase file watcher limits for Metro (avoid ENOSPC)
-RUN echo "fs.inotify.max_user_watches=524288" | tee -a /etc/sysctl.conf && sysctl -p
-
 # Set working directory
 WORKDIR /app
 
