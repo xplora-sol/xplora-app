@@ -1,62 +1,51 @@
 FROM oven/bun:1-debian
 
-# Install system dependencies including expect for unbuffer and nginx
+# Install system dependencies including qrencode and nginx
 RUN apt-get update && apt-get install -y \
     bash git curl jq qrencode expect nginx \
  && rm -rf /var/lib/apt/lists/*
 
-# Install global packages using bun
-RUN bun add -g qrcode-terminal expo-cli @expo/ngrok@^4.1.0 --non-interactive
+# Install global npm packages using bun
+RUN bun add -g qrcode-terminal expo-cli --non-interactive
 
-# Increase file watcher limits for Metro
+# Increase file watcher limits for Metro (avoid ENOSPC)
 RUN echo "fs.inotify.max_user_watches=524288" | tee -a /etc/sysctl.conf && sysctl -p
 
-# Add SYS_ADMIN capability for Coolify to allow modifying kernel parameters
-# This is a Coolify-specific instruction and might not be standard Dockerfile syntax
-# Coolify will interpret this and add the capability to the container
-LABEL coolify.capabilities="SYS_ADMIN"
-
+# Set working directory
 WORKDIR /app
 
-# Copy package files first for better caching
+# Copy package files first for caching
 COPY package.json bun.lock ./
 
-# Install dependencies (cached layer)
+# Install dependencies
 RUN bun install
 
-# Copy the rest of the application
+# Copy the rest of the app
 COPY . .
 
-# Create public directory for serving files
+# Create public directory for QR code / web interface
 RUN mkdir -p /app/public
 
 # Configure nginx to serve static files
-RUN echo 'server { \n\
-    listen 80; \n\
-    server_name _; \n\
-    root /app/public; \n\
-    \n\
-    location / { \n\
-        autoindex on; \n\
-        try_files $uri $uri/ =404; \n\
-    } \n\
-    \n\
-    location /health { \n\
-        return 200 "OK"; \n\
-        add_header Content-Type text/plain; \n\
-    } \n\
+RUN echo 'server { \
+    listen 80; \
+    server_name _; \
+    root /app/public; \
+    location / { autoindex on; try_files $uri $uri/ =404; } \
+    location /health { return 200 "OK"; add_header Content-Type text/plain; } \
 }' > /etc/nginx/sites-available/default
 
-# Copy and prepare start script
+# Copy start script
 COPY start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
+# Expose ports:
+# - 8081: Metro server (Expo start)
+# - 19000/19001/19002: Expo DevTools & other services
+# - 80: nginx for QR web interface
+EXPOSE 80 8081 19000 19001 19002
+
 VOLUME ["/output"]
 
-# Expose nginx (80), Expo ports
-EXPOSE 80 19000 19001 19002 8081
-
-HEALTHCHECK --interval=60s --timeout=30s --start-period=180s \
-  CMD ps -p $(cat /tmp/expo.pid) > /dev/null || exit 1
-
+# Run start script
 CMD ["/usr/local/bin/start.sh"]
