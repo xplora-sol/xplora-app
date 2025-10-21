@@ -13,7 +13,7 @@ service nginx start
 
 # Start Expo without tunnel (LAN mode)
 # Bind to all interfaces (0.0.0.0) so Docker host / LAN devices can reach it
-EXPO_CMD="npx expo start --host 0.0.0.0 --dev-client --port 8081"
+EXPO_CMD="bunx expo start --host 0.0.0.0 --dev-client --port 8081"
 echo "🌐 Starting Expo server on LAN (0.0.0.0:8081)..."
 echo "Logs will be in $LOGFILE"
 
