@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PROJECT_DIR=/app
-OUTPUT_DIR=/output
+# Detect if running in Docker or locally
+if [ -d "/app" ] && [ "$(pwd)" = "/app" ]; then
+  PROJECT_DIR=/app
+  OUTPUT_DIR=/output
+else
+  PROJECT_DIR=.
+  OUTPUT_DIR=.
+fi
+
 LOGFILE=/tmp/expo.log
 
 mkdir -p "$OUTPUT_DIR"
@@ -10,12 +17,33 @@ cd "$PROJECT_DIR"
 
 echo "🚀 Starting Expo with tunnel mode..."
 echo "Logs will be written to $LOGFILE"
+echo "Project: $PROJECT_DIR"
+echo "Output: $OUTPUT_DIR"
 echo
 
-# Start expo in background
+# Install dependencies first
 npm i
-npx expo start --tunnel >"$LOGFILE" 2>&1 &
-EXPO_PID=$!
+
+# Clear old log
+> "$LOGFILE"
+
+# Start expo in background, capturing all output to log file
+# Force line buffering with stdbuf if available, or use script
+if command -v unbuffer >/dev/null 2>&1; then
+  # Use expect's unbuffer to disable output buffering
+  unbuffer npx expo start --tunnel 2>&1 | tee -a "$LOGFILE" &
+  EXPO_PID=$!
+elif command -v stdbuf >/dev/null 2>&1; then
+  # Use stdbuf for line buffering (Linux)
+  stdbuf -oL -eL npx expo start --tunnel 2>&1 | tee -a "$LOGFILE" &
+  EXPO_PID=$!
+else
+  # Fallback: use script to capture pty output (works on macOS)
+  # This captures the actual terminal output including the QR code
+  (script -q /dev/null npx expo start --tunnel 2>&1 || npx expo start --tunnel 2>&1) | tee -a "$LOGFILE" &
+  EXPO_PID=$!
+fi
+
 echo "Expo PID: $EXPO_PID"
 
 echo "⏳ Waiting up to 120s for Expo tunnel URL..."
@@ -25,33 +53,45 @@ URL=""
 for i in $(seq 1 120); do
   sleep 1
 
+  # Strip ANSI color codes from log file for parsing
+  CLEAN_LOG=$(sed 's/\x1b\[[0-9;]*m//g' "$LOGFILE")
+
   # Extract possible URLs from logs
   # Match exp:// URLs with the format: exp://xxx-anonymous-8081.exp.direct
-  URL=$(grep -Eo 'exp://[a-zA-Z0-9_-]+-anonymous-[0-9]+\.exp\.direct' "$LOGFILE" | head -n1 || true)
+  URL=$(echo "$CLEAN_LOG" | grep -Eo 'exp://[a-zA-Z0-9_-]+-anonymous-[0-9]+\.exp\.direct' | head -n1 || true)
+  if [ -z "$URL" ]; then
+    # Try broader .exp.direct pattern
+    URL=$(echo "$CLEAN_LOG" | grep -Eo 'exp://[a-zA-Z0-9._-]+\.exp\.direct' | head -n1 || true)
+  fi
   if [ -z "$URL" ]; then
     # Fallback: any exp:// URL (excluding localhost)
-    URL=$(grep -Eo 'exp://[^ ]+' "$LOGFILE" | grep -v 'localhost' | head -n1 || true)
+    URL=$(echo "$CLEAN_LOG" | grep -Eo 'exp://[^ ]+' | grep -v 'localhost' | head -n1 || true)
   fi
   if [ -z "$URL" ]; then
     # Try QR code URLs
-    URL=$(grep -Eo 'https://qr\.expo\.dev/[^ ]+' "$LOGFILE" | head -n1 || true)
+    URL=$(echo "$CLEAN_LOG" | grep -Eo 'https://qr\.expo\.dev/[^ ]+' | head -n1 || true)
   fi
   if [ -z "$URL" ]; then
     # Try tunnel URLs
-    URL=$(grep -Eo 'https://[a-zA-Z0-9.-]+\.tunnel\.expo\.dev[^ ]*' "$LOGFILE" | head -n1 || true)
+    URL=$(echo "$CLEAN_LOG" | grep -Eo 'https://[a-zA-Z0-9.-]+\.tunnel\.expo\.dev[^ ]*' | head -n1 || true)
   fi
 
   if [ -n "$URL" ]; then
+    echo "🔍 Found URL at iteration $i: $URL"
     break
   fi
 done
 
 if [ -z "$URL" ]; then
   echo "❌ ERROR: No Expo URL found after 120s."
-  echo "Here are the last few URLs seen in logs (for debugging):"
-  grep -Eo 'https?://[^ ]+' "$LOGFILE" | sort -u | tail -n 10 || true
   echo
+  echo "Here are ALL URLs seen in logs (for debugging):"
+  sed 's/\x1b\[[0-9;]*m//g' "$LOGFILE" | grep -Eo '(exp|https?)://[^ ]+' | sort -u || true
+  echo
+  echo "📋 Last 50 lines of log:"
   tail -n 50 "$LOGFILE"
+  echo
+  echo "💡 Check if ngrok/tunnel authentication is required"
   exit 1
 fi
 
@@ -84,7 +124,19 @@ echo "   - $OUTPUT_DIR/url.txt"
 echo
 echo "📋 URL: $URL"
 echo
-echo "📡 Tailing Expo logs (Ctrl+C to stop)..."
+echo "📡 Expo is running. Press Ctrl+C to stop."
 echo
 
+# Cleanup function
+cleanup() {
+  echo
+  echo "🛑 Shutting down..."
+  kill $EXPO_PID 2>/dev/null || true
+  rm -f "/tmp/expo_pipe_$$" 2>/dev/null || true
+  exit 0
+}
+
+trap cleanup INT TERM
+
+# Keep script running and show logs
 tail -n +1 -f "$LOGFILE"
