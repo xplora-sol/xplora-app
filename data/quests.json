@@ -1,0 +1,204 @@
+{
+  "quests": [
+    {
+      "id": "quest_001",
+      "title": "Thamel Coffee Explorer",
+      "description": "Visit a popular Thamel coffee shop and take a photo",
+      "location": {
+        "latitude": 27.7154,
+        "longitude": 85.3123,
+        "address": "Thamel, Kathmandu"
+      },
+      "reward": 50,
+      "difficulty": "easy",
+      "category": "social",
+      "status": "active",
+      "completionCriteria": "Take a photo at the coffee shop",
+      "actionType": "photo",
+      "actionLabel": "Take Photo",
+      "verificationSteps": [
+        "Take a photo at the coffee shop",
+        "Make sure the coffee shop name is visible",
+        "Upload the photo to complete"
+      ]
+    },
+    {
+      "id": "quest_002",
+      "title": "Ratna Park Fitness Challenge",
+      "description": "Complete 20 push-ups at Ratna Park early in the morning",
+      "location": {
+        "latitude": 27.7056,
+        "longitude": 85.3152,
+        "address": "Ratna Park, Kathmandu"
+      },
+      "reward": 100,
+      "difficulty": "medium",
+      "category": "fitness",
+      "status": "active",
+      "completionCriteria": "Complete 20 push-ups and verify with photo",
+      "actionType": "photo",
+      "actionLabel": "Record Activity",
+      "verificationSteps": [
+        "Arrive at Ratna Park",
+        "Complete 20 push-ups",
+        "Take a photo or video as proof",
+        "Submit your workout"
+      ]
+    },
+    {
+      "id": "quest_003",
+      "title": "Street Art in Patan",
+      "description": "Find and photograph a mural in Patan's Kupondole area",
+      "location": {
+        "latitude": 27.6851,
+        "longitude": 85.3157,
+        "address": "Kupondole, Lalitpur"
+      },
+      "reward": 75,
+      "difficulty": "easy",
+      "category": "exploration",
+      "status": "active",
+      "completionCriteria": "Take a photo of the mural",
+      "actionType": "photo",
+      "actionLabel": "Capture Art",
+      "verificationSteps": [
+        "Navigate to Kupondole area",
+        "Find the street art mural",
+        "Take a clear photo of the artwork",
+        "Share your discovery"
+      ]
+    },
+    {
+      "id": "quest_004",
+      "title": "Swayambhunath Heritage Visit",
+      "description": "Visit Swayambhunath Stupa and learn about its history",
+      "location": {
+        "latitude": 27.7149,
+        "longitude": 85.2901,
+        "address": "Swayambhunath Stupa, Kathmandu"
+      },
+      "reward": 150,
+      "difficulty": "medium",
+      "category": "education",
+      "status": "active",
+      "completionCriteria": "Answer 3 trivia questions about the site",
+      "actionType": "quiz",
+      "actionLabel": "Take Quiz",
+      "verificationSteps": [
+        "Visit Swayambhunath Stupa",
+        "Explore and learn about the site",
+        "Answer trivia questions",
+        "Score 2/3 or higher to complete"
+      ],
+      "quizQuestions": [
+        {
+          "question": "What is Swayambhunath commonly known as?",
+          "options": ["Monkey Temple", "Stupa Temple", "Buddha Temple", "Heritage Temple"],
+          "correctAnswer": "Monkey Temple"
+        },
+        {
+          "question": "Approximately how old is Swayambhunath?",
+          "options": ["500 years", "1000 years", "1500 years", "2000+ years"],
+          "correctAnswer": "2000+ years"
+        },
+        {
+          "question": "What do the eyes on the stupa represent?",
+          "options": ["Buddha's all-seeing eyes", "Protection", "Wisdom", "Peace"],
+          "correctAnswer": "Buddha's all-seeing eyes"
+        }
+      ]
+    },
+    {
+      "id": "quest_005",
+      "title": "Bhojan Mandala",
+      "description": "Try a new local food stall and share your experience",
+      "location": {
+        "latitude": 27.7080,
+        "longitude": 85.3268,
+        "address": "Basantapur Durbar Square, Kathmandu"
+      },
+      "reward": 80,
+      "difficulty": "easy",
+      "category": "food",
+      "status": "active",
+      "completionCriteria": "Take a photo of your meal and rate it",
+      "actionType": "photo_rating",
+      "actionLabel": "Share Experience",
+      "verificationSteps": [
+        "Find a local food stall",
+        "Order and enjoy a meal",
+        "Take a photo of your food",
+        "Rate your experience (1-5 stars)"
+      ]
+    },
+    {
+      "id": "quest_006",
+      "title": "Bagmati Cleanup Hero",
+      "description": "Participate in a Bagmati River cleanup and collect trash",
+      "location": {
+        "latitude": 27.6855,
+        "longitude": 85.3285,
+        "address": "Bagmati River, Teku"
+      },
+      "reward": 200,
+      "difficulty": "hard",
+      "category": "community",
+      "status": "active",
+      "completionCriteria": "Collect and photograph 10 pieces of trash",
+      "actionType": "checkin_photo",
+      "actionLabel": "Check In & Upload",
+      "verificationSteps": [
+        "Check in at the cleanup location",
+        "Collect at least 10 pieces of trash",
+        "Take a photo of collected trash",
+        "Log your contribution"
+      ]
+    },
+    {
+      "id": "quest_007",
+      "title": "Sunrise at Nagarkot",
+      "description": "Hike or travel to Nagarkot for sunrise photos",
+      "location": {
+        "latitude": 27.7172,
+        "longitude": 85.5200,
+        "address": "Nagarkot, Bhaktapur"
+      },
+      "reward": 250,
+      "difficulty": "hard",
+      "category": "fitness",
+      "status": "active",
+      "completionCriteria": "Reach viewpoint before 6 AM and take sunrise photo",
+      "actionType": "timed_photo",
+      "actionLabel": "Capture Sunrise",
+      "verificationSteps": [
+        "Arrive at Nagarkot viewpoint",
+        "Be there before 6:00 AM",
+        "Take a photo of the sunrise",
+        "Timestamp will verify early arrival"
+      ]
+    },
+    {
+      "id": "quest_008",
+      "title": "Support Local Bookstore",
+      "description": "Shop at a local bookstore in Kathmandu and leave a review",
+      "location": {
+        "latitude": 27.7124,
+        "longitude": 85.3115,
+        "address": "Pilgrims Book House, Thamel"
+      },
+      "reward": 100,
+      "difficulty": "easy",
+      "category": "social",
+      "status": "completed",
+      "completionCriteria": "Make a purchase and write a review",
+      "actionType": "review",
+      "actionLabel": "Write Review",
+      "verificationSteps": [
+        "Visit the bookstore",
+        "Make a purchase",
+        "Write a review (min 50 characters)",
+        "Share your experience"
+      ]
+    }
+  ]
+}

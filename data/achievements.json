@@ -1,0 +1,64 @@
+{
+  "achievements": [
+    {
+      "id": "first_steps",
+      "emoji": "🎯",
+      "title": "First Steps",
+      "description": "Complete your first quest",
+      "requirement": {
+        "type": "completed_quests",
+        "value": 1
+      }
+    },
+    {
+      "id": "quest_master",
+      "emoji": "🌟",
+      "title": "Quest Master",
+      "description": "Complete 5 quests",
+      "requirement": {
+        "type": "completed_quests",
+        "value": 5
+      }
+    },
+    {
+      "id": "token_collector",
+      "emoji": "💰",
+      "title": "Token Collector",
+      "description": "Earn 100 tokens",
+      "requirement": {
+        "type": "tokens_earned",
+        "value": 100
+      }
+    },
+    {
+      "id": "versatile_explorer",
+      "emoji": "🏆",
+      "title": "Versatile Explorer",
+      "description": "Try all quest categories",
+      "requirement": {
+        "type": "all_categories",
+        "value": null
+      }
+    },
+    {
+      "id": "dedication",
+      "emoji": "💪",
+      "title": "Dedication",
+      "description": "Complete 10 quests",
+      "requirement": {
+        "type": "completed_quests",
+        "value": 10
+      }
+    },
+    {
+      "id": "token_millionaire",
+      "emoji": "💎",
+      "title": "Token Millionaire",
+      "description": "Earn 500 tokens",
+      "requirement": {
+        "type": "tokens_earned",
+        "value": 500
+      }
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "users": [
+    {
+      "id": "user_001",
+      "walletAddress": "0x1234567890abcdef1234567890abcdef12345678",
+      "username": "QuestMaster",
+      "createdAt": "2025-01-15T08:30:00.000Z",
+      "hasCompletedOnboarding": true,
+      "completedQuestIds": ["quest_008", "quest_001", "quest_003"],
+      "stats": {
+        "totalTokensEarned": 250,
+        "completedQuestsCount": 3,
+        "level": 3,
+        "memberSince": "2025-01-15T08:30:00.000Z"
+      }
+    },
+    {
+      "id": "user_002",
+      "walletAddress": "0xabcdef1234567890abcdef1234567890abcdef12",
+      "username": "KathmanduExplorer",
+      "createdAt": "2025-02-01T10:15:00.000Z",
+      "hasCompletedOnboarding": true,
+      "completedQuestIds": ["quest_001", "quest_002", "quest_004", "quest_005", "quest_008"],
+      "stats": {
+        "totalTokensEarned": 450,
+        "completedQuestsCount": 5,
+        "level": 5,
+        "memberSince": "2025-02-01T10:15:00.000Z"
+      }
+    },
+    {
+      "id": "user_003",
+      "walletAddress": "0x7890abcdef1234567890abcdef1234567890abcd",
+      "username": "AdventureSeeker",
+      "createdAt": "2025-03-10T14:45:00.000Z",
+      "hasCompletedOnboarding": true,
+      "completedQuestIds": ["quest_008"],
+      "stats": {
+        "totalTokensEarned": 100,
+        "completedQuestsCount": 1,
+        "level": 1,
+        "memberSince": "2025-03-10T14:45:00.000Z"
+      }
+    },
+    {
+      "id": "user_004",
+      "walletAddress": "0x4567890abcdef1234567890abcdef1234567890a",
+      "username": "NepalNomad",
+      "createdAt": "2025-04-05T09:20:00.000Z",
+      "hasCompletedOnboarding": true,
+      "completedQuestIds": [],
+      "stats": {
+        "totalTokensEarned": 0,
+        "completedQuestsCount": 0,
+        "level": 1,
+        "memberSince": "2025-04-05T09:20:00.000Z"
+      }
+    },
+    {
+      "id": "user_005",
+      "walletAddress": "0xbcdef1234567890abcdef1234567890abcdef123",
+      "username": "TokenCollector",
+      "createdAt": "2025-05-20T16:00:00.000Z",
+      "hasCompletedOnboarding": true,
+      "completedQuestIds": ["quest_001", "quest_002", "quest_003", "quest_004", "quest_005", "quest_006", "quest_007", "quest_008"],
+      "stats": {
+        "totalTokensEarned": 750,
+        "completedQuestsCount": 8,
+        "level": 8,
+        "memberSince": "2025-05-20T16:00:00.000Z"
+      }
+    }
+  ]
+}
