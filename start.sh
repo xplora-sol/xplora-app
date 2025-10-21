@@ -13,6 +13,7 @@ echo "Logs will be written to $LOGFILE"
 echo
 
 # Start expo in background
+npm i
 npx expo start --tunnel >"$LOGFILE" 2>&1 &
 EXPO_PID=$!
 echo "Expo PID: $EXPO_PID"
@@ -25,11 +26,18 @@ for i in $(seq 1 120); do
   sleep 1
 
   # Extract possible URLs from logs
-  URL=$(grep -Eo 'exp://[^ ]+' "$LOGFILE" | grep -v 'localhost' | head -n1 || true)
+  # Match exp:// URLs with the format: exp://xxx-anonymous-8081.exp.direct
+  URL=$(grep -Eo 'exp://[a-zA-Z0-9_-]+-anonymous-[0-9]+\.exp\.direct' "$LOGFILE" | head -n1 || true)
   if [ -z "$URL" ]; then
+    # Fallback: any exp:// URL (excluding localhost)
+    URL=$(grep -Eo 'exp://[^ ]+' "$LOGFILE" | grep -v 'localhost' | head -n1 || true)
+  fi
+  if [ -z "$URL" ]; then
+    # Try QR code URLs
     URL=$(grep -Eo 'https://qr\.expo\.dev/[^ ]+' "$LOGFILE" | head -n1 || true)
   fi
   if [ -z "$URL" ]; then
+    # Try tunnel URLs
     URL=$(grep -Eo 'https://[a-zA-Z0-9.-]+\.tunnel\.expo\.dev[^ ]*' "$LOGFILE" | head -n1 || true)
   fi
 

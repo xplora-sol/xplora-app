@@ -1,5 +1,5 @@
 # Use Debian-based image instead of Alpine
-FROM node:18-bullseye
+FROM node:20-bookworm
 
 # Install dependencies (qrencode works here)
 RUN apt-get update && apt-get install -y \
@@ -7,10 +7,7 @@ RUN apt-get update && apt-get install -y \
  && rm -rf /var/lib/apt/lists/*
 
 # Optional: for QR in terminal
-RUN npm install -g qrcode-terminal expo-cli
-
-# Install expo CLI
-RUN npm install -g expo-cli
+RUN npm install -g qrcode-terminal expo-cli @expo/ngrok@^4.1.0
 
 WORKDIR /app
 
