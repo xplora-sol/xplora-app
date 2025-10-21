@@ -11,7 +11,7 @@ RUN bun add -g qrcode-terminal expo-cli @expo/ngrok@^4.1.0
 WORKDIR /app
 
 # Copy package files first for better caching
-COPY package.json bun.lockb ./
+COPY package.json bun.lock ./
 
 # Install dependencies (cached layer)
 RUN bun install
