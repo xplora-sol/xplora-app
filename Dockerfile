@@ -6,6 +6,9 @@ RUN apt-get update && apt-get install -y \
     bash git curl jq qrencode \
  && rm -rf /var/lib/apt/lists/*
 
+# Optional: for QR in terminal
+RUN npm install -g qrcode-terminal expo-cli
+
 # Install expo CLI
 RUN npm install -g expo-cli
 
