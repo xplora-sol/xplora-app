@@ -23,15 +23,13 @@ URL=""
 for i in $(seq 1 120); do
   sleep 1
   # look for exp:// or https://qr.expo.dev or https://expo.dev/... lines
-  URL=$(grep -Eo 'exp://[^ ]+' "$LOGFILE" | head -n1 || true)
+  URL=$(grep -Eo 'exp://[^ ]+' "$LOGFILE" | grep -v 'localhost' | head -n1 || true)
   if [ -z "$URL" ]; then
-    URL=$(grep -Eo 'https?://qr\.expo\.dev/[^ ]+' "$LOGFILE" | head -n1 || true)
+    URL=$(grep -Eo 'https://qr\.expo\.dev/[^ ]+' "$LOGFILE" | head -n1 || true)
   fi
   if [ -z "$URL" ]; then
-    URL=$(grep -Eo 'https?://[^\ ]*expo\.dev[^\ ]*' "$LOGFILE" | head -n1 || true)
-  fi
-  if [ -n "$URL" ]; then
-    break
+    # Match only tunnel links (skip blog/docs)
+    URL=$(grep -Eo 'https://[a-z0-9.-]+\.tunnel\.expo\.dev[^ ]*' "$LOGFILE" | head -n1 || true)
   fi
 done
 
