@@ -1,14 +1,13 @@
+import { Ionicons } from "@expo/vector-icons";
 import { Redirect, Tabs } from "expo-router";
 import React from "react";
+import { Platform, View } from "react-native";
 
 import { HapticTab } from "@/components/haptic-tab";
-import { IconSymbol } from "@/components/ui/icon-symbol";
-import { Colors } from "@/constants/theme";
+import { GameColors } from "@/constants/theme";
 import { useAuth } from "@/hooks/query/use-auth";
-import { useColorScheme } from "@/hooks/use-color-scheme";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
   const { isAuthenticated, hasCompletedOnboarding } = useAuth();
 
   if (!isAuthenticated) {
@@ -22,35 +21,134 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarActiveTintColor: GameColors.secondary,
+        tabBarInactiveTintColor: "rgba(139, 149, 165, 0.4)",
         headerShown: false,
         tabBarButton: HapticTab,
+        tabBarStyle: {
+          position: "absolute",
+          backgroundColor: "rgba(10, 15, 30, 0.98)",
+          borderTopWidth: 0,
+          borderRadius: 30,
+          marginHorizontal: 16,
+          marginBottom: Platform.OS === "ios" ? 30 : 20,
+          height: 80,
+          paddingBottom: Platform.OS === "ios" ? 12 : 12,
+          paddingTop: 12,
+          shadowColor: GameColors.secondary,
+          shadowOffset: { width: 0, height: 10 },
+          shadowOpacity: 0.4,
+          shadowRadius: 25,
+          elevation: 30,
+          borderWidth: 2,
+          borderColor: "rgba(0, 245, 255, 0.25)",
+        },
+        tabBarLabelStyle: {
+          fontSize: 11,
+          fontWeight: "900",
+          letterSpacing: 0.8,
+          textTransform: "uppercase",
+          fontFamily: Platform.OS === "ios" ? "Menlo-Bold" : "monospace",
+          marginTop: 4,
+        },
+        tabBarIconStyle: {
+          marginBottom: -2,
+        },
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
           title: "Map",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="map.fill" color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <View
+              style={{
+                backgroundColor: focused
+                  ? "rgba(0, 245, 255, 0.15)"
+                  : "transparent",
+                borderRadius: 18,
+                padding: 12,
+                borderWidth: focused ? 2.5 : 0,
+                borderColor: focused ? "rgba(0, 245, 255, 0.5)" : "transparent",
+              }}
+            >
+              <Ionicons
+                name={focused ? "compass" : "compass-outline"}
+                size={focused ? 34 : 28}
+                color={color}
+                style={{
+                  textShadowColor: focused
+                    ? GameColors.secondary
+                    : "transparent",
+                  textShadowOffset: { width: 0, height: 0 },
+                  textShadowRadius: focused ? 15 : 0,
+                }}
+              />
+            </View>
           ),
         }}
       />
       <Tabs.Screen
         name="progress"
         options={{
-          title: "Progress",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="chart.bar.fill" color={color} />
+          title: "Quests",
+          tabBarIcon: ({ color, focused }) => (
+            <View
+              style={{
+                backgroundColor: focused
+                  ? "rgba(0, 245, 255, 0.15)"
+                  : "transparent",
+                borderRadius: 18,
+                padding: 12,
+                borderWidth: focused ? 2.5 : 0,
+                borderColor: focused ? "rgba(0, 245, 255, 0.5)" : "transparent",
+              }}
+            >
+              <Ionicons
+                name={focused ? "trophy" : "trophy-outline"}
+                size={focused ? 34 : 28}
+                color={color}
+                style={{
+                  textShadowColor: focused
+                    ? GameColors.secondary
+                    : "transparent",
+                  textShadowOffset: { width: 0, height: 0 },
+                  textShadowRadius: focused ? 15 : 0,
+                }}
+              />
+            </View>
           ),
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          title: "Profile",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="person.fill" color={color} />
+          title: "Wallet",
+          tabBarIcon: ({ color, focused }) => (
+            <View
+              style={{
+                backgroundColor: focused
+                  ? "rgba(0, 245, 255, 0.15)"
+                  : "transparent",
+                borderRadius: 18,
+                padding: 12,
+                borderWidth: focused ? 2.5 : 0,
+                borderColor: focused ? "rgba(0, 245, 255, 0.5)" : "transparent",
+              }}
+            >
+              <Ionicons
+                name={focused ? "wallet" : "wallet-outline"}
+                size={focused ? 34 : 28}
+                color={color}
+                style={{
+                  textShadowColor: focused
+                    ? GameColors.secondary
+                    : "transparent",
+                  textShadowOffset: { width: 0, height: 0 },
+                  textShadowRadius: focused ? 15 : 0,
+                }}
+              />
+            </View>
           ),
         }}
       />
