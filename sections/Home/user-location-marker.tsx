@@ -1,6 +1,6 @@
-import { Ionicons } from "@expo/vector-icons";
-import React, { useEffect, useRef, useState } from "react";
-import { Animated, Image, Platform, StyleSheet, Text, View } from "react-native";
+import { Ionicons } from '@expo/vector-icons';
+import React, { useEffect, useRef, useState } from 'react';
+import { Animated, Image, Platform, StyleSheet, Text, View } from 'react-native';
 
 interface UserLocationMarkerProps {
   avatarUrl?: string;
@@ -28,14 +28,14 @@ const ANIMATION_CONFIG = {
 };
 
 export function UserLocationMarker({
-  avatarUrl = "https://img.freepik.com/free-vector/hand-drawn-nft-style-ape-illustration_23-2149622021.jpg",
+  avatarUrl = 'https://img.freepik.com/free-vector/hand-drawn-nft-style-ape-illustration_23-2149622021.jpg',
   size,
 }: UserLocationMarkerProps) {
   const [imageLoading, setImageLoading] = useState(true);
   const pulseAnim = useRef(new Animated.Value(1)).current;
   const opacityAnim = useRef(new Animated.Value(ANIMATION_CONFIG.initialOpacity)).current;
 
-  const isAndroid = Platform.OS === "android";
+  const isAndroid = Platform.OS === 'android';
   const sizeConfig = isAndroid ? SIZES.android : SIZES.ios;
   const markerSize = size || sizeConfig.container;
   const avatarSize = isAndroid ? sizeConfig.avatar : markerSize - 6;
@@ -68,7 +68,7 @@ export function UserLocationMarker({
             useNativeDriver: true,
           }),
         ]),
-      ])
+      ]),
     );
 
     animation.start();
@@ -167,44 +167,44 @@ export function UserLocationMarker({
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
-    alignItems: "center",
-    position: "relative",
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
   },
   pulseRing: {
-    position: "absolute",
-    backgroundColor: "#FFD60A",
+    position: 'absolute',
+    backgroundColor: '#FFD60A',
   },
   avatarContainer: {
-    position: "absolute",
-    backgroundColor: "#fff",
-    borderColor: "#FFD60A",
-    justifyContent: "center",
-    alignItems: "center",
-    shadowColor: "#FFD60A",
+    position: 'absolute',
+    backgroundColor: '#fff',
+    borderColor: '#FFD60A',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#FFD60A',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.5,
     shadowRadius: 8,
     elevation: 8,
-    overflow: "hidden",
+    overflow: 'hidden',
   },
   avatar: {
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
   centerDot: {
-    position: "absolute",
-    backgroundColor: "#FFD60A",
-    borderColor: "#fff",
-    shadowColor: "#FFD60A",
+    position: 'absolute',
+    backgroundColor: '#FFD60A',
+    borderColor: '#fff',
+    shadowColor: '#FFD60A',
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.8,
     shadowRadius: 4,
     elevation: 10,
   },
   placeholder: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     zIndex: 2,
-    backgroundColor: "#FFD60A",
+    backgroundColor: '#FFD60A',
   },
 });

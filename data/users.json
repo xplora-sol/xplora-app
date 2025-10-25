@@ -62,7 +62,16 @@
       "username": "TokenCollector",
       "createdAt": "2025-05-20T16:00:00.000Z",
       "hasCompletedOnboarding": true,
-      "completedQuestIds": ["quest_001", "quest_002", "quest_003", "quest_004", "quest_005", "quest_006", "quest_007", "quest_008"],
+      "completedQuestIds": [
+        "quest_001",
+        "quest_002",
+        "quest_003",
+        "quest_004",
+        "quest_005",
+        "quest_006",
+        "quest_007",
+        "quest_008"
+      ],
       "stats": {
         "totalTokensEarned": 750,
         "completedQuestsCount": 8,

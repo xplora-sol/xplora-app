@@ -8,12 +8,7 @@ import type { Quest } from '@/types/quest';
  * @param lon2 Longitude of second point
  * @returns Distance in meters
  */
-export function calculateDistance(
-  lat1: number,
-  lon1: number,
-  lat2: number,
-  lon2: number
-): number {
+export function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
   const R = 6371e3; // Earth's radius in meters
   const φ1 = (lat1 * Math.PI) / 180;
   const φ2 = (lat2 * Math.PI) / 180;
@@ -40,13 +35,13 @@ export function isQuestNearby(
   userLat: number,
   userLon: number,
   quest: Quest,
-  radiusMeters: number = 50
+  radiusMeters: number = 50,
 ): { isNearby: boolean; distance: number } {
   const distance = calculateDistance(
     userLat,
     userLon,
     quest.location.latitude,
-    quest.location.longitude
+    quest.location.longitude,
   );
 
   return {
@@ -67,7 +62,7 @@ export function findNearbyQuests(
   userLat: number,
   userLon: number,
   quests: Quest[],
-  radiusMeters: number = 50
+  radiusMeters: number = 50,
 ): { quest: Quest; distance: number }[] {
   const nearbyQuests: { quest: Quest; distance: number }[] = [];
 
@@ -77,12 +72,7 @@ export function findNearbyQuests(
       continue;
     }
 
-    const { isNearby, distance } = isQuestNearby(
-      userLat,
-      userLon,
-      quest,
-      radiusMeters
-    );
+    const { isNearby, distance } = isQuestNearby(userLat, userLon, quest, radiusMeters);
 
     if (isNearby) {
       nearbyQuests.push({ quest, distance });

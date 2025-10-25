@@ -6,23 +6,23 @@ export type ThemedTextProps = TextProps & {
   lightColor?: string;
   darkColor?: string;
   type?:
-  | 'default'
-  | 'title'
-  | 'defaultSemiBold'
-  | 'subtitle'
-  | 'link'
-  | 'largeTitle'      // 48px - for large numbers/stats
-  | 'largeNumber'     // 36px - for large stats
-  | 'heading1'        // 32px - same as title
-  | 'heading2'        // 28px - section headers
-  | 'heading3'        // 24px - medium headers
-  | 'heading4'        // 18px - subsection headers
-  | 'body'            // 16px - same as default
-  | 'bodyMedium'      // 15px - medium body text
-  | 'bodySmall'       // 14px - small body text
-  | 'caption'         // 12px - labels and captions
-  | 'captionBold'     // 12px bold - labels
-  | 'tiny';           // 10px - very small text
+    | 'default'
+    | 'title'
+    | 'defaultSemiBold'
+    | 'subtitle'
+    | 'link'
+    | 'largeTitle' // 48px - for large numbers/stats
+    | 'largeNumber' // 36px - for large stats
+    | 'heading1' // 32px - same as title
+    | 'heading2' // 28px - section headers
+    | 'heading3' // 24px - medium headers
+    | 'heading4' // 18px - subsection headers
+    | 'body' // 16px - same as default
+    | 'bodyMedium' // 15px - medium body text
+    | 'bodySmall' // 14px - small body text
+    | 'caption' // 12px - labels and captions
+    | 'captionBold' // 12px bold - labels
+    | 'tiny'; // 10px - very small text
 };
 
 export function ThemedText({

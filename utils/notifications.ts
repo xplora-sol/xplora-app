@@ -32,7 +32,7 @@ export async function requestNotificationPermissions(): Promise<boolean> {
 export async function scheduleQuestNotification(
   questTitle: string,
   questReward: number,
-  distance: number
+  distance: number,
 ): Promise<void> {
   await Notifications.scheduleNotificationAsync({
     content: {

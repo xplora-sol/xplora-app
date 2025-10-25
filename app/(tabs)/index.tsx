@@ -1,18 +1,18 @@
-import { ThemedText } from "@/components/themed-text";
-import { GameColors } from "@/constants/theme";
-import { useQuests, useQuestStatsQuery } from "@/hooks/query/use-quests";
-import { useGeofencing } from "@/hooks/use-geofencing";
-import { useLocationTracking } from "@/hooks/use-location-tracking";
-import { useNotificationPermissions } from "@/hooks/use-notification-permissions";
-import { QuestMarker } from "@/sections/Home/quest-marker";
-import { TokenStatsOverlay } from "@/sections/Home/token-stats-overlay";
-import { UserLocationMarker } from "@/sections/Home/user-location-marker";
-import { UserStatsOverlay } from "@/sections/Home/user-stats-overlay";
-import type { Quest } from "@/types/quest";
-import { Ionicons } from "@expo/vector-icons";
-import * as Location from "expo-location";
-import { useRouter } from "expo-router";
-import React, { useRef, useState } from "react";
+import { ThemedText } from '@/components/themed-text';
+import { GameColors } from '@/constants/theme';
+import { useQuests, useQuestStatsQuery } from '@/hooks/query/use-quests';
+import { useGeofencing } from '@/hooks/use-geofencing';
+import { useLocationTracking } from '@/hooks/use-location-tracking';
+import { useNotificationPermissions } from '@/hooks/use-notification-permissions';
+import { QuestMarker } from '@/sections/Home/quest-marker';
+import { TokenStatsOverlay } from '@/sections/Home/token-stats-overlay';
+import { UserLocationMarker } from '@/sections/Home/user-location-marker';
+import { UserStatsOverlay } from '@/sections/Home/user-stats-overlay';
+import type { Quest } from '@/types/quest';
+import { Ionicons } from '@expo/vector-icons';
+import * as Location from 'expo-location';
+import { useRouter } from 'expo-router';
+import React, { useRef, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -20,58 +20,64 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
-} from "react-native";
-import MapView, { Circle, Marker, PROVIDER_DEFAULT, PROVIDER_GOOGLE, Region } from "react-native-maps";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+} from 'react-native';
+import MapView, {
+  Circle,
+  Marker,
+  PROVIDER_DEFAULT,
+  PROVIDER_GOOGLE,
+  Region,
+} from 'react-native-maps';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // Custom dark map style
 const darkMapStyle = [
   {
-    elementType: "geometry",
-    stylers: [{ color: "#1a1a2e" }],
+    elementType: 'geometry',
+    stylers: [{ color: '#1a1a2e' }],
   },
   {
-    elementType: "labels.text.fill",
-    stylers: [{ color: "#8a8a8a" }],
+    elementType: 'labels.text.fill',
+    stylers: [{ color: '#8a8a8a' }],
   },
   {
-    elementType: "labels.text.stroke",
-    stylers: [{ color: "#1a1a2e" }],
+    elementType: 'labels.text.stroke',
+    stylers: [{ color: '#1a1a2e' }],
   },
   {
-    featureType: "administrative",
-    elementType: "geometry",
-    stylers: [{ color: "#00f5ff", weight: 0.5, visibility: "on" }],
+    featureType: 'administrative',
+    elementType: 'geometry',
+    stylers: [{ color: '#00f5ff', weight: 0.5, visibility: 'on' }],
   },
   {
-    featureType: "poi",
-    elementType: "geometry",
-    stylers: [{ color: "#16213e" }],
+    featureType: 'poi',
+    elementType: 'geometry',
+    stylers: [{ color: '#16213e' }],
   },
   {
-    featureType: "poi",
-    elementType: "labels.text.fill",
-    stylers: [{ color: "#6b6b6b" }],
+    featureType: 'poi',
+    elementType: 'labels.text.fill',
+    stylers: [{ color: '#6b6b6b' }],
   },
   {
-    featureType: "road",
-    elementType: "geometry",
-    stylers: [{ color: "#2c3e50" }],
+    featureType: 'road',
+    elementType: 'geometry',
+    stylers: [{ color: '#2c3e50' }],
   },
   {
-    featureType: "road",
-    elementType: "geometry.stroke",
-    stylers: [{ color: "#1a1a2e" }],
+    featureType: 'road',
+    elementType: 'geometry.stroke',
+    stylers: [{ color: '#1a1a2e' }],
   },
   {
-    featureType: "road.highway",
-    elementType: "geometry",
-    stylers: [{ color: "#34495e" }],
+    featureType: 'road.highway',
+    elementType: 'geometry',
+    stylers: [{ color: '#34495e' }],
   },
   {
-    featureType: "water",
-    elementType: "geometry",
-    stylers: [{ color: "#0f3460" }],
+    featureType: 'water',
+    elementType: 'geometry',
+    stylers: [{ color: '#0f3460' }],
   },
 ];
 
@@ -104,7 +110,7 @@ export default function MapScreen() {
 
   const handleMarkerPress = (questId: string) => {
     router.push({
-      pathname: "/quest-details",
+      pathname: '/quest-details',
       params: { questId },
     });
   };
@@ -117,7 +123,7 @@ export default function MapScreen() {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         },
-        1000
+        1000,
       );
     } else {
       try {
@@ -134,12 +140,12 @@ export default function MapScreen() {
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
             },
-            1000
+            1000,
           );
         }
       } catch (error) {
-        console.error("Error getting location:", error);
-        Alert.alert("Error", "Could not get your current location");
+        console.error('Error getting location:', error);
+        Alert.alert('Error', 'Could not get your current location');
       }
     }
   };
@@ -156,12 +162,7 @@ export default function MapScreen() {
   }
 
   return (
-    <View
-      style={[
-        styles.container,
-        { paddingTop: Platform.OS === "ios" ? 0 : top },
-      ]}
-    >
+    <View style={[styles.container, { paddingTop: Platform.OS === 'ios' ? 0 : top }]}>
       <MapView
         ref={mapRef}
         mapType="standard"
@@ -185,7 +186,7 @@ export default function MapScreen() {
               flat
               tracksViewChanges={false}
             >
-              <UserLocationMarker size={Platform.OS ==="android" ? 36 : 50} />
+              <UserLocationMarker size={Platform.OS === 'android' ? 36 : 50} />
             </Marker>
 
             {/* Geofencing radius circles */}
@@ -223,7 +224,7 @@ export default function MapScreen() {
             latitude={quest.location.latitude}
             longitude={quest.location.longitude}
             title={quest.title}
-            difficulty={quest.difficulty as "easy" | "medium" | "hard"}
+            difficulty={quest.difficulty as 'easy' | 'medium' | 'hard'}
             category={quest.category}
             reward={quest.reward}
             onPress={handleMarkerPress}
@@ -261,63 +262,62 @@ export default function MapScreen() {
 
 const styles = StyleSheet.create({
   container: {
-   ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFillObject,
     flex: 1,
-    backgroundColor: "#0F0F23",
+    backgroundColor: '#0F0F23',
   },
   map: {
-
-   ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFillObject,
     flex: 1,
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#0F0F23",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#0F0F23',
   },
   topOverlayContainer: {
-    position: "absolute",
+    position: 'absolute',
     top: 55,
     left: 12,
     right: 12,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
     gap: 8,
   },
   topLeftOverlay: {
     flex: 1,
-    maxWidth: "58%",
+    maxWidth: '58%',
   },
   topRightOverlay: {
     flexShrink: 1,
-    maxWidth: "38%",
+    maxWidth: '38%',
   },
   locationButton: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 100,
     left: 20,
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: "#1A1A2E",
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: '#1A1A2E',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderWidth: 2,
-    borderColor: "rgba(255, 255, 255, 0.2)",
-    shadowColor: "#000",
+    borderColor: 'rgba(255, 255, 255, 0.2)',
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 4,
   },
   bottomGradient: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
     height: 100,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
   },
 });

@@ -1,6 +1,6 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { AppKit, AppKitProvider } from '@reown/appkit-react-native';
-import { Stack, } from 'expo-router';
+import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
@@ -34,7 +34,10 @@ export default function RootLayout() {
                 }}
               />
             </Stack>
-            <View style={{ position: 'absolute', height: '100%', width: '100%' }} pointerEvents="box-none">
+            <View
+              style={{ position: 'absolute', height: '100%', width: '100%' }}
+              pointerEvents="box-none"
+            >
               <AppKit />
             </View>
             <StatusBar style="auto" />

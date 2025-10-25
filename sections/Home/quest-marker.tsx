@@ -1,17 +1,17 @@
-import { ThemedText } from "@/components/themed-text";
-import { GameColors } from "@/constants/theme";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
-import React, { useEffect, useRef } from "react";
-import { Animated, Platform, StyleSheet, View } from "react-native";
-import { Marker } from "react-native-maps";
+import { ThemedText } from '@/components/themed-text';
+import { GameColors } from '@/constants/theme';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+import React, { useEffect, useRef } from 'react';
+import { Animated, Platform, StyleSheet, View } from 'react-native';
+import { Marker } from 'react-native-maps';
 
 interface QuestMarkerProps {
   id: string;
   latitude: number;
   longitude: number;
   title: string;
-  difficulty: "easy" | "medium" | "hard";
+  difficulty: 'easy' | 'medium' | 'hard';
   category: string;
   reward: number;
   onPress: (id: string) => void;
@@ -75,7 +75,7 @@ export function QuestMarker({
           duration: ANIMATION_CONFIG.pulse.duration,
           useNativeDriver: true,
         }),
-      ])
+      ]),
     );
 
     const glowAnimation = Animated.loop(
@@ -90,7 +90,7 @@ export function QuestMarker({
           duration: ANIMATION_CONFIG.glow.duration,
           useNativeDriver: true,
         }),
-      ])
+      ]),
     );
 
     pulseAnimation.start();
@@ -102,7 +102,7 @@ export function QuestMarker({
     };
   }, [pulseAnim, glowAnim]);
 
-  const isAndroid = Platform.OS === "android";
+  const isAndroid = Platform.OS === 'android';
   const size = isAndroid ? SIZES.android : SIZES.ios;
 
   const getDifficultyColor = (): string => {
@@ -124,7 +124,7 @@ export function QuestMarker({
   };
 
   const getCategoryIcon = () => {
-    const iconProps = { size: size.icon, color: "#fff" };
+    const iconProps = { size: size.icon, color: '#fff' };
     const icons = {
       social: <Ionicons name="people" {...iconProps} />,
       fitness: <Ionicons name="fitness" {...iconProps} />,
@@ -209,7 +209,7 @@ export function QuestMarker({
             >
               {getCategoryIcon()}
             </View>
-            
+
             {/* Inner Glow Highlight */}
             <View
               style={[
@@ -240,10 +240,7 @@ export function QuestMarker({
               },
             ]}
           >
-            <ThemedText
-              type="tiny"
-              style={[styles.rewardText, { fontSize: size.rewardFontSize }]}
-            >
+            <ThemedText type="tiny" style={[styles.rewardText, { fontSize: size.rewardFontSize }]}>
               {reward}
             </ThemedText>
           </LinearGradient>
@@ -255,17 +252,17 @@ export function QuestMarker({
 
 const styles = StyleSheet.create({
   markerContainer: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   glowOuter: {
-    position: "absolute",
+    position: 'absolute',
   },
   markerShadow: {
-    backgroundColor: "rgba(0, 0, 0, 0.3)",
-    justifyContent: "center",
-    alignItems: "center",
-    shadowColor: "#000",
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.4,
     shadowRadius: 6,
@@ -273,35 +270,35 @@ const styles = StyleSheet.create({
   },
   markerInner: {
     borderWidth: 3,
-    borderColor: "#fff",
-    justifyContent: "center",
-    alignItems: "center",
-    overflow: "hidden",
+    borderColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
   },
   iconContainer: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     zIndex: 2,
   },
   innerGlow: {
-    position: "absolute",
-    backgroundColor: "rgba(255, 255, 255, 0.3)",
+    position: 'absolute',
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
   },
   rewardBadge: {
     borderRadius: 10,
     paddingHorizontal: 8,
     paddingVertical: 3,
     borderWidth: 2,
-    borderColor: "#fff",
-    alignItems: "center",
-    shadowColor: "#000",
+    borderColor: '#fff',
+    alignItems: 'center',
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 4,
     elevation: 5,
   },
   rewardText: {
-    color: "#1A1A2E",
-    fontWeight: "bold",
+    color: '#1A1A2E',
+    fontWeight: 'bold',
   },
 });
