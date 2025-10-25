@@ -1,8 +1,8 @@
-import { ThemedText } from "@/components/themed-text";
-import { GameColors } from "@/constants/theme";
-import { LinearGradient } from "expo-linear-gradient";
+import { ThemedText } from '@/components/themed-text';
+import { GameColors } from '@/constants/theme';
+import { LinearGradient } from 'expo-linear-gradient';
 
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View } from 'react-native';
 
 interface StatCardProps {
   label: string;
@@ -13,7 +13,7 @@ export function StatCard({ label, value }: StatCardProps) {
   return (
     <View style={styles.cardWrapper}>
       <LinearGradient
-        colors={["rgba(255, 107, 53, 0.2)", "rgba(230, 57, 70, 0.1)"]}
+        colors={['rgba(255, 107, 53, 0.2)', 'rgba(230, 57, 70, 0.1)']}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.card}
@@ -44,12 +44,12 @@ const styles = StyleSheet.create({
     padding: 14,
     borderRadius: 16,
     borderWidth: 2,
-    borderColor: "rgba(255, 107, 53, 0.3)",
-    backgroundColor: "rgba(26, 26, 46, 0.8)",
-    overflow: "hidden",
+    borderColor: 'rgba(255, 107, 53, 0.3)',
+    backgroundColor: 'rgba(26, 26, 46, 0.8)',
+    overflow: 'hidden',
   },
   glowEffect: {
-    position: "absolute",
+    position: 'absolute',
     top: -20,
     right: -20,
     width: 60,
@@ -64,17 +64,17 @@ const styles = StyleSheet.create({
   },
   label: {
     opacity: 0.9,
-    fontWeight: "600",
-    textTransform: "uppercase",
+    fontWeight: '600',
+    textTransform: 'uppercase',
     fontSize: 11,
     letterSpacing: 1,
-    color: "#FFFFFF",
+    color: '#FFFFFF',
   },
   value: {
     marginTop: 6,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 24,
-    color: "#FFFFFF",
+    color: '#FFFFFF',
     textShadowColor: GameColors.primary,
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 10,

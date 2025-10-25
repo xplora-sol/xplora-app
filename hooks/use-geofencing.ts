@@ -46,7 +46,7 @@ export function useGeofencing({
         newCoords.latitude,
         newCoords.longitude,
         quests,
-        radiusMeters
+        radiusMeters,
       );
 
       // Send notifications for nearby quests we haven't notified about yet
@@ -75,7 +75,7 @@ export function useGeofencing({
             timeInterval: 10000, // Update every 10 seconds
             distanceInterval: 10, // Or when moved 10 meters
           },
-          handleLocationUpdate
+          handleLocationUpdate,
         );
       } catch (error) {
         console.error('Error watching location:', error);

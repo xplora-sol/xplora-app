@@ -15,17 +15,21 @@ import { useRouter } from 'expo-router';
 
 import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
 
+import { AppKitButton, useAppKit } from '@reown/appkit-react-native';
+
 export default function ProfileScreen() {
   const router = useRouter();
 
   const { user, logout } = useAuth();
-  const { activeQuests, completedQuests, totalQuests, completionRate, totalTokens, level } = useQuestStatsQuery();
+  const { activeQuests, completedQuests, totalQuests, completionRate, totalTokens, level } =
+    useQuestStatsQuery();
   const { achievements, getCategoryStats } = useQuests();
+  const { disconnect } = useAppKit();
 
   const handleLogout = () => {
     Alert.alert(
       'Logout',
-      'Are you sure you want to logout?',
+      'Are you sure you want to logout, this will disconnect your wallet as well?',
       [
         {
           text: 'Cancel',
@@ -37,9 +41,10 @@ export default function ProfileScreen() {
           onPress: async () => {
             await logout();
             router.replace('/(auth)/login');
+            disconnect();
           },
         },
-      ]
+      ],
     );
   };
 
@@ -60,10 +65,9 @@ export default function ProfileScreen() {
 
   return (
     <ThemedScrollView style={styles.container}>
-      <ProfileHeader
-        username={user?.username || "Quest Explorer"}
-        level={level}
-      />
+      <ProfileHeader username={user?.username || 'Quest Explorer'} level={level} />
+
+      <AppKitButton />
 
       <TokenBalanceCard totalTokens={totalTokens} />
 
@@ -112,7 +116,7 @@ export default function ProfileScreen() {
           <ThemedText style={styles.infoValue}>
             {new Date(user?.createdAt || Date.now()).toLocaleDateString('en-US', {
               month: 'long',
-              year: 'numeric'
+              year: 'numeric',
             })}
           </ThemedText>
         </ThemedView>

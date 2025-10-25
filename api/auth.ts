@@ -18,7 +18,7 @@ export const authApi = {
   login: async (walletAddress: string, username: string): Promise<User> => {
     // Check if user exists in users.json
     const existingUser = usersData.users.find(
-      (u) => u.username.toLowerCase() === username.toLowerCase()
+      (u) => u.username.toLowerCase() === username.toLowerCase(),
     );
 
     const user: User = existingUser || {

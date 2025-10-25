@@ -4,7 +4,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from './use-auth';
 import { QuestData } from '@/types/quest';
 
-
 export function useQuests() {
   const queryClient = useQueryClient();
   const { user, updateUserStats, addCompletedQuest } = useAuth();
@@ -13,18 +12,14 @@ export function useQuests() {
     queryKey: ['quests', user?.id],
     queryFn: async () => {
       if (!user) return null;
-      
+
       let data = await questApi.getQuestData(user.id);
-      
+
       // Initialize if no data exists
       if (!data) {
-        data = await questApi.initializeQuests(
-          user.id,
-          user.completedQuestIds || [],
-          user.stats
-        );
+        data = await questApi.initializeQuests(user.id, user.completedQuestIds || [], user.stats);
       }
-      
+
       return data;
     },
     enabled: !!user,
@@ -40,7 +35,7 @@ export function useQuests() {
       }
 
       const updatedQuests = questData.quests.map((q) =>
-        q.id === questId ? { ...q, status: 'completed' as const } : q
+        q.id === questId ? { ...q, status: 'completed' as const } : q,
       );
 
       const newStats: UserStats = {
@@ -53,7 +48,7 @@ export function useQuests() {
       const updatedAchievements = questApi.checkAndUnlockAchievements(
         updatedQuests,
         newStats,
-        questData.achievements
+        questData.achievements,
       );
 
       const updatedData: QuestData = {
@@ -64,7 +59,7 @@ export function useQuests() {
       };
 
       await questApi.updateQuestData(user.id, updatedData);
-      
+
       // Update auth store
       updateUserStats(newStats);
       addCompletedQuest(questId);
@@ -77,15 +72,19 @@ export function useQuests() {
   });
 
   const updateQuestStatusMutation = useMutation({
-    mutationFn: async ({ questId, status }: { questId: string; status: 'active' | 'completed' }) => {
+    mutationFn: async ({
+      questId,
+      status,
+    }: {
+      questId: string;
+      status: 'active' | 'completed';
+    }) => {
       if (!user || !questData) throw new Error('No user or quest data');
 
       const quest = questData.quests.find((q) => q.id === questId);
       if (!quest) throw new Error('Quest not found');
 
-      const updatedQuests = questData.quests.map((q) =>
-        q.id === questId ? { ...q, status } : q
-      );
+      const updatedQuests = questData.quests.map((q) => (q.id === questId ? { ...q, status } : q));
 
       let newStats = questData.userStats;
 
@@ -104,7 +103,7 @@ export function useQuests() {
       const updatedAchievements = questApi.checkAndUnlockAchievements(
         updatedQuests,
         newStats,
-        questData.achievements
+        questData.achievements,
       );
 
       const updatedData: QuestData = {
@@ -135,7 +134,7 @@ export function useQuests() {
       const updatedAchievements = questApi.checkAndUnlockAchievements(
         questData.quests,
         newStats,
-        questData.achievements
+        questData.achievements,
       );
 
       const updatedData: QuestData = {
@@ -160,7 +159,7 @@ export function useQuests() {
 
       const newStats = { ...initialUserStats };
       const data = await questApi.initializeQuests(user.id, ['quest_008'], newStats);
-      
+
       updateUserStats(newStats);
 
       return data;
@@ -185,17 +184,20 @@ export function useQuests() {
 
   const getCategoryStats = () => {
     if (!questData) return {};
-    
-    return questData.quests.reduce((acc, quest) => {
-      if (!acc[quest.category]) {
-        acc[quest.category] = { total: 0, completed: 0 };
-      }
-      acc[quest.category].total++;
-      if (quest.status === 'completed') {
-        acc[quest.category].completed++;
-      }
-      return acc;
-    }, {} as Record<string, { total: number; completed: number }>);
+
+    return questData.quests.reduce(
+      (acc, quest) => {
+        if (!acc[quest.category]) {
+          acc[quest.category] = { total: 0, completed: 0 };
+        }
+        acc[quest.category].total++;
+        if (quest.status === 'completed') {
+          acc[quest.category].completed++;
+        }
+        return acc;
+      },
+      {} as Record<string, { total: number; completed: number }>,
+    );
   };
 
   return {
@@ -221,7 +223,8 @@ export function useQuestStatsQuery() {
   const activeQuests = getActiveQuests();
   const completedQuests = getCompletedQuests();
   const totalQuests = quests.length;
-  const completionRate = totalQuests > 0 ? Math.round((completedQuests.length / totalQuests) * 100) : 0;
+  const completionRate =
+    totalQuests > 0 ? Math.round((completedQuests.length / totalQuests) * 100) : 0;
 
   return {
     activeQuests,

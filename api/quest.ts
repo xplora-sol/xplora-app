@@ -30,7 +30,7 @@ export const questApi = {
   initializeQuests: async (
     userId: string,
     completedQuestIds: string[] = [],
-    stats?: UserStats
+    stats?: UserStats,
   ): Promise<QuestData> => {
     const quests = questsData.quests.map((quest) => ({
       ...quest,
@@ -59,7 +59,7 @@ export const questApi = {
   checkAndUnlockAchievements: (
     quests: Quest[],
     userStats: UserStats,
-    achievements: Achievement[]
+    achievements: Achievement[],
   ): Achievement[] => {
     const completedQuests = quests.filter((q) => q.status === 'completed');
     const categories = new Set(completedQuests.map((q) => q.category));

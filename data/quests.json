@@ -113,7 +113,7 @@
       "title": "Bhojan Mandala",
       "description": "Try a new local food stall and share your experience",
       "location": {
-        "latitude": 27.7080,
+        "latitude": 27.708,
         "longitude": 85.3268,
         "address": "Basantapur Durbar Square, Kathmandu"
       },
@@ -160,7 +160,7 @@
       "description": "Hike or travel to Nagarkot for sunrise photos",
       "location": {
         "latitude": 27.7172,
-        "longitude": 85.5200,
+        "longitude": 85.52,
         "address": "Nagarkot, Bhaktapur"
       },
       "reward": 250,
