@@ -38,7 +38,7 @@ credentials.json
 
 # typescript
 *.tsbuildinfo
-
+*.apk
 app-example
 
 # generated native folders

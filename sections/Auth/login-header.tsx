@@ -18,9 +18,7 @@ export function LoginHeader({
           source={require('../../assets/images/app-logo.png')}
           width={64}
           height={64}
-          style={{
-            flex: 1,
-          }}
+          style={{ width: '100%', height: '100%', resizeMode: 'contain', borderRadius: 16 }}
         />
       </View>
       <ThemedText type="title" style={styles.appName}>
@@ -39,7 +37,7 @@ const styles = StyleSheet.create({
   logoCircle: {
     width: 120,
     height: 120,
-    borderRadius: 60,
+    borderRadius: 9999,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 24,
