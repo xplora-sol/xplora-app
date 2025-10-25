@@ -14,6 +14,9 @@ import {
     ScrollView,
     StyleSheet
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const PENDING_USERNAME_KEY = '@pending_username';
 
 export default function LoginScreen() {
     const [username, setUsername] = useState('');
@@ -22,18 +25,55 @@ export default function LoginScreen() {
     const { open } = useAppKit();
 
     const { address, isConnected } = useAccount();
-    const { isLoading, isOpen } = useAppKitState()
+    const { isLoading, isOpen } = useAppKitState();
 
     const requestedUsernameRef = useRef<string | null>(null);
 
+    // Load pending username on mount
     useEffect(() => {
-        if (!isOpen && !isLoading && isConnected) {
-            const usernameToUse = requestedUsernameRef.current ?? username.trim();
+        const loadPendingUsername = async () => {
+            try {
+                const pendingUsername = await AsyncStorage.getItem(PENDING_USERNAME_KEY);
+                if (pendingUsername) {
+                    requestedUsernameRef.current = pendingUsername;
+                    setUsername(pendingUsername);
+                }
+            } catch (error) {
+                console.error('Failed to load pending username:', error);
+            }
+        };
 
-            login({ walletAddress: address ?? "", username: usernameToUse });
-            requestedUsernameRef.current = null;
-            router.replace('/onboarding');
-        }
+        loadPendingUsername();
+    }, []);
+
+    useEffect(() => {
+        const handleConnection = async () => {
+            if (!isOpen && !isLoading && isConnected) {
+                try {
+                    // Try to get username from AsyncStorage first, then ref, then state
+                    let usernameToUse = await AsyncStorage.getItem(PENDING_USERNAME_KEY);
+                    
+                    if (!usernameToUse) {
+                        usernameToUse = requestedUsernameRef.current ?? username.trim();
+                    }
+
+                    if (usernameToUse) {
+                        login({ walletAddress: address ?? "", username: usernameToUse });
+                        
+                        // Clear the stored username after successful login
+                        await AsyncStorage.removeItem(PENDING_USERNAME_KEY);
+                        requestedUsernameRef.current = null;
+                        
+                        router.replace('/onboarding');
+                    }
+                } catch (error) {
+                    console.error('Failed to handle connection:', error);
+                    Alert.alert('Error', 'Failed to complete login. Please try again.');
+                }
+            }
+        };
+
+        handleConnection();
     }, [isOpen, isLoading, isConnected, address, login, router, username]);
 
     const connectWallet = async () => {
@@ -47,9 +87,18 @@ export default function LoginScreen() {
             return;
         }
 
-        requestedUsernameRef.current = username.trim();
+        try {
+            const trimmedUsername = username.trim();
+            
+            // Save to both ref and AsyncStorage
+            requestedUsernameRef.current = trimmedUsername;
+            await AsyncStorage.setItem(PENDING_USERNAME_KEY, trimmedUsername);
 
-        open();
+            open();
+        } catch (error) {
+            console.error('Failed to save username:', error);
+            Alert.alert('Error', 'Failed to save username. Please try again.');
+        }
     };
 
     return (
