@@ -15,17 +15,20 @@ import { useRouter } from 'expo-router';
 
 import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
 
+import { AppKitButton, useAppKit } from "@reown/appkit-react-native"
+
 export default function ProfileScreen() {
   const router = useRouter();
 
   const { user, logout } = useAuth();
   const { activeQuests, completedQuests, totalQuests, completionRate, totalTokens, level } = useQuestStatsQuery();
   const { achievements, getCategoryStats } = useQuests();
+  const { disconnect } = useAppKit()
 
   const handleLogout = () => {
     Alert.alert(
       'Logout',
-      'Are you sure you want to logout?',
+      'Are you sure you want to logout, this will disconnect your wallet as well?',
       [
         {
           text: 'Cancel',
@@ -36,6 +39,7 @@ export default function ProfileScreen() {
           style: 'destructive',
           onPress: async () => {
             await logout();
+            disconnect();
             router.replace('/(auth)/login');
           },
         },
@@ -64,6 +68,8 @@ export default function ProfileScreen() {
         username={user?.username || "Quest Explorer"}
         level={level}
       />
+
+      <AppKitButton />
 
       <TokenBalanceCard totalTokens={totalTokens} />
 

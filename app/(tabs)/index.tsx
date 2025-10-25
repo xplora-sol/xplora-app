@@ -21,7 +21,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import MapView, { Circle, Marker, Region } from "react-native-maps";
+import MapView, { Circle, Marker, PROVIDER_DEFAULT, PROVIDER_GOOGLE, Region } from "react-native-maps";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 // Custom dark map style
@@ -165,6 +165,7 @@ export default function MapScreen() {
       <MapView
         ref={mapRef}
         mapType="standard"
+        provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
         customMapStyle={darkMapStyle}
         userInterfaceStyle="dark"
         zoomEnabled={true}
@@ -260,10 +261,13 @@ export default function MapScreen() {
 
 const styles = StyleSheet.create({
   container: {
+   ...StyleSheet.absoluteFillObject,
     flex: 1,
     backgroundColor: "#0F0F23",
   },
   map: {
+
+   ...StyleSheet.absoluteFillObject,
     flex: 1,
   },
   loadingContainer: {

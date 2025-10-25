@@ -3,24 +3,40 @@ import { useAuth } from '@/hooks/query/use-auth';
 import { FeatureList } from '@/sections/Auth/feature-list';
 import { LoginForm } from '@/sections/Auth/login-form';
 import { LoginHeader } from '@/sections/Auth/login-header';
+import { useAccount, useAppKit, useAppKitState } from '@reown/appkit-react-native';
 import { useRouter } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
     Alert,
     Dimensions,
     KeyboardAvoidingView,
     Platform,
     ScrollView,
-    StyleSheet,
+    StyleSheet
 } from 'react-native';
 
 export default function LoginScreen() {
     const [username, setUsername] = useState('');
-    const [isConnecting, setIsConnecting] = useState(false);
     const router = useRouter();
     const { login } = useAuth();
+    const { open } = useAppKit();
 
-    const connectMetaMask = async () => {
+    const { address, isConnected } = useAccount();
+    const { isLoading, isOpen } = useAppKitState()
+
+    const requestedUsernameRef = useRef<string | null>(null);
+
+    useEffect(() => {
+        if (!isOpen && !isLoading && isConnected) {
+            const usernameToUse = requestedUsernameRef.current ?? username.trim();
+
+            login({ walletAddress: address ?? "", username: usernameToUse });
+            requestedUsernameRef.current = null;
+            router.replace('/onboarding');
+        }
+    }, [isOpen, isLoading, isConnected, address, login, router, username]);
+
+    const connectWallet = async () => {
         if (!username.trim()) {
             Alert.alert('Required Field', 'Please enter a username to continue.');
             return;
@@ -31,22 +47,9 @@ export default function LoginScreen() {
             return;
         }
 
-        setIsConnecting(true);
+        requestedUsernameRef.current = username.trim();
 
-        try {
-            await new Promise((resolve) => setTimeout(resolve, 1500));
-
-            const mockWalletAddress = `0x${Math.random().toString(16).substr(2, 40)}`;
-
-            await login({ walletAddress: mockWalletAddress, username: username.trim() });
-
-            router.replace('/onboarding');
-        } catch (error) {
-            console.error('Login error:', error);
-            Alert.alert('Connection Failed', 'Unable to connect to MetaMask. Please try again.');
-        } finally {
-            setIsConnecting(false);
-        }
+        open();
     };
 
     return (
@@ -63,8 +66,8 @@ export default function LoginScreen() {
                     <LoginForm
                         username={username}
                         onUsernameChange={setUsername}
-                        onConnectPress={connectMetaMask}
-                        isConnecting={isConnecting}
+                        onConnectPress={connectWallet}
+                        isConnecting={isLoading}
                     />
                     <FeatureList />
                 </ThemedView>

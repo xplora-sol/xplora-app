@@ -47,7 +47,6 @@ export function LoginForm({
                 editable={!isConnecting}
             />
 
-            {/* MetaMask Button */}
             <TouchableOpacity
                 style={[styles.metamaskButton, isConnecting && styles.buttonDisabled]}
                 onPress={onConnectPress}
@@ -60,7 +59,7 @@ export function LoginForm({
                     <>
                         <Ionicons name="wallet" size={24} color="#fff" />
                         <ThemedText type="heading4" style={styles.buttonText}>
-                            Connect with MetaMask
+                            Connect your wallet
                         </ThemedText>
                     </>
                 )}
