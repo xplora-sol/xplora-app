@@ -185,7 +185,7 @@ export default function MapScreen() {
               flat
               tracksViewChanges={false}
             >
-              <UserLocationMarker />
+              <UserLocationMarker size={Platform.OS ==="android" ? 36 : 50} />
             </Marker>
 
             {/* Geofencing radius circles */}

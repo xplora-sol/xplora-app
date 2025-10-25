@@ -1,27 +1,53 @@
-import React, { useEffect, useRef } from "react";
-import { Animated, Image, StyleSheet, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import React, { useEffect, useRef, useState } from "react";
+import { Animated, Image, Platform, StyleSheet, Text, View } from "react-native";
 
 interface UserLocationMarkerProps {
   avatarUrl?: string;
   size?: number;
 }
 
+const SIZES = {
+  android: {
+    container: 36,
+    avatar: 30,
+    centerDot: 4,
+    pulseMax: 1.5,
+  },
+  ios: {
+    container: 50,
+    avatar: 44,
+    centerDot: 6,
+    pulseMax: 1.8,
+  },
+};
+
+const ANIMATION_CONFIG = {
+  duration: 2000,
+  initialOpacity: 0.7,
+};
+
 export function UserLocationMarker({
   avatarUrl = "https://img.freepik.com/free-vector/hand-drawn-nft-style-ape-illustration_23-2149622021.jpg",
-  size = 50,
+  size,
 }: UserLocationMarkerProps) {
-  // Simple pulse animation
+  const [imageLoading, setImageLoading] = useState(true);
   const pulseAnim = useRef(new Animated.Value(1)).current;
-  const opacityAnim = useRef(new Animated.Value(0.7)).current;
+  const opacityAnim = useRef(new Animated.Value(ANIMATION_CONFIG.initialOpacity)).current;
+
+  const isAndroid = Platform.OS === "android";
+  const sizeConfig = isAndroid ? SIZES.android : SIZES.ios;
+  const markerSize = size || sizeConfig.container;
+  const avatarSize = isAndroid ? sizeConfig.avatar : markerSize - 6;
+  const centerDotSize = sizeConfig.centerDot;
 
   useEffect(() => {
-    // Gentle pulse animation - single expanding ring
-    Animated.loop(
+    const animation = Animated.loop(
       Animated.parallel([
         Animated.sequence([
           Animated.timing(pulseAnim, {
-            toValue: 1.8,
-            duration: 2000,
+            toValue: sizeConfig.pulseMax,
+            duration: ANIMATION_CONFIG.duration,
             useNativeDriver: true,
           }),
           Animated.timing(pulseAnim, {
@@ -33,69 +59,105 @@ export function UserLocationMarker({
         Animated.sequence([
           Animated.timing(opacityAnim, {
             toValue: 0,
-            duration: 2000,
+            duration: ANIMATION_CONFIG.duration,
             useNativeDriver: true,
           }),
           Animated.timing(opacityAnim, {
-            toValue: 0.7,
+            toValue: ANIMATION_CONFIG.initialOpacity,
             duration: 0,
             useNativeDriver: true,
           }),
         ]),
       ])
-    ).start();
-  }, [pulseAnim, opacityAnim]);
+    );
+
+    animation.start();
+
+    return () => {
+      animation.stop();
+    };
+  }, [pulseAnim, opacityAnim, sizeConfig.pulseMax]);
 
   return (
-    <View style={[styles.container, { width: size * 2.5, height: size * 2.5 }]}>
-      {/* Single pulse ring */}
+    <View
+      style={[
+        styles.container,
+        {
+          width: markerSize,
+          height: markerSize,
+        },
+      ]}
+    >
+      {/* Pulse Ring */}
       <Animated.View
         style={[
           styles.pulseRing,
           {
-            width: size,
-            height: size,
-            borderRadius: size / 2,
+            width: markerSize,
+            height: markerSize,
+            borderRadius: markerSize / 2,
             transform: [{ scale: pulseAnim }],
             opacity: opacityAnim,
           },
         ]}
       />
 
-      {/* Avatar container */}
+      {/* Avatar Container */}
       <View
         style={[
           styles.avatarContainer,
           {
-            width: size,
-            height: size,
-            borderRadius: size / 2,
+            width: markerSize,
+            height: markerSize,
+            borderRadius: markerSize / 2,
+            borderWidth: isAndroid ? 2 : 3,
           },
         ]}
       >
-        {/* NFT Avatar */}
-        <Image
-          source={{ uri: avatarUrl }}
-          style={[
-            styles.avatar,
-            {
-              width: size - 6,
-              height: size - 6,
-              borderRadius: (size - 6) / 2,
-            },
-          ]}
-          resizeMode="cover"
-        />
+        {imageLoading ? (
+          <View
+            style={[
+              styles.placeholder,
+              {
+                width: avatarSize,
+                height: avatarSize,
+                borderRadius: avatarSize / 2,
+              },
+            ]}
+          >
+            <Text>
+              <Ionicons name="people" size={20} color="#fff" />,
+            </Text>
+          </View>
+        ) : (
+          <Image
+            source={{ uri: avatarUrl }}
+            style={[
+              styles.avatar,
+              {
+                width: avatarSize,
+                height: avatarSize,
+                borderRadius: avatarSize / 2,
+              },
+            ]}
+            onLoadStart={() => setImageLoading(true)}
+            onLoadEnd={() => setImageLoading(false)}
+            resizeMode="cover"
+            accessible
+            accessibilityLabel="User avatar"
+          />
+        )}
       </View>
 
-      {/* Center dot */}
+      {/* Center Dot */}
       <View
         style={[
           styles.centerDot,
           {
-            width: 6,
-            height: 6,
-            borderRadius: 3,
+            width: centerDotSize,
+            height: centerDotSize,
+            borderRadius: centerDotSize / 2,
+            borderWidth: isAndroid ? 1 : 1.5,
           },
         ]}
       />
@@ -112,12 +174,10 @@ const styles = StyleSheet.create({
   pulseRing: {
     position: "absolute",
     backgroundColor: "#FFD60A",
-    opacity: 0.4,
   },
   avatarContainer: {
     position: "absolute",
     backgroundColor: "#fff",
-    borderWidth: 3,
     borderColor: "#FFD60A",
     justifyContent: "center",
     alignItems: "center",
@@ -134,12 +194,17 @@ const styles = StyleSheet.create({
   centerDot: {
     position: "absolute",
     backgroundColor: "#FFD60A",
-    borderWidth: 1.5,
     borderColor: "#fff",
     shadowColor: "#FFD60A",
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.8,
     shadowRadius: 4,
     elevation: 10,
+  },
+  placeholder: {
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 2,
+    backgroundColor: "#FFD60A",
   },
 });
