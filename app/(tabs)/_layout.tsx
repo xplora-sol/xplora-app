@@ -61,28 +61,11 @@ export default function TabLayout() {
         options={{
           title: "Map",
           tabBarIcon: ({ color, focused }) => (
-            <View
-              style={{
-                backgroundColor: focused
-                  ? "rgba(0, 245, 255, 0.15)"
-                  : "transparent",
-                borderRadius: 18,
-                padding: 12,
-                borderWidth: focused ? 2.5 : 0,
-                borderColor: focused ? "rgba(0, 245, 255, 0.5)" : "transparent",
-              }}
-            >
+            <View>
               <Ionicons
                 name={focused ? "compass" : "compass-outline"}
-                size={focused ? 34 : 28}
+                size={24}
                 color={color}
-                style={{
-                  textShadowColor: focused
-                    ? GameColors.secondary
-                    : "transparent",
-                  textShadowOffset: { width: 0, height: 0 },
-                  textShadowRadius: focused ? 15 : 0,
-                }}
               />
             </View>
           ),
@@ -93,28 +76,11 @@ export default function TabLayout() {
         options={{
           title: "Quests",
           tabBarIcon: ({ color, focused }) => (
-            <View
-              style={{
-                backgroundColor: focused
-                  ? "rgba(0, 245, 255, 0.15)"
-                  : "transparent",
-                borderRadius: 18,
-                padding: 12,
-                borderWidth: focused ? 2.5 : 0,
-                borderColor: focused ? "rgba(0, 245, 255, 0.5)" : "transparent",
-              }}
-            >
+            <View>
               <Ionicons
                 name={focused ? "trophy" : "trophy-outline"}
-                size={focused ? 34 : 28}
+                size={24}
                 color={color}
-                style={{
-                  textShadowColor: focused
-                    ? GameColors.secondary
-                    : "transparent",
-                  textShadowOffset: { width: 0, height: 0 },
-                  textShadowRadius: focused ? 15 : 0,
-                }}
               />
             </View>
           ),
@@ -125,28 +91,11 @@ export default function TabLayout() {
         options={{
           title: "Wallet",
           tabBarIcon: ({ color, focused }) => (
-            <View
-              style={{
-                backgroundColor: focused
-                  ? "rgba(0, 245, 255, 0.15)"
-                  : "transparent",
-                borderRadius: 18,
-                padding: 12,
-                borderWidth: focused ? 2.5 : 0,
-                borderColor: focused ? "rgba(0, 245, 255, 0.5)" : "transparent",
-              }}
-            >
+            <View>
               <Ionicons
                 name={focused ? "wallet" : "wallet-outline"}
-                size={focused ? 34 : 28}
+                size={24}
                 color={color}
-                style={{
-                  textShadowColor: focused
-                    ? GameColors.secondary
-                    : "transparent",
-                  textShadowOffset: { width: 0, height: 0 },
-                  textShadowRadius: focused ? 15 : 0,
-                }}
               />
             </View>
           ),
