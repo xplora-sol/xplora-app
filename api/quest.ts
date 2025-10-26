@@ -42,22 +42,87 @@ export const questApi = {
     // 2) New backend shape: { success: true, data: { location: '...', quests: [ ... ] }, error: null }
     // Normalize to an array of quest-like objects and map them into our internal Quest shape with
     // safe defaults so missing fields from the backend won't crash the app.
-    const sourceQuests: any[] = Array.isArray((questsData as any).quests)
-      ? (questsData as any).quests
-      : Array.isArray((questsData as any)?.data?.quests)
+    // Separate out backend-provided quests (new backend shape) and local frontend quests
+    const backendSource: any[] = Array.isArray((questsData as any)?.data?.quests)
       ? (questsData as any).data.quests
+      : [];
+    const localSource: any[] = Array.isArray((questsData as any).quests)
+      ? (questsData as any).quests
       : [];
 
     const normalizeId = (q: any, idx: number) => {
       if (q?.id) return String(q.id);
-      // Prefer created_at if available, else a sanitized title, else timestamp+index
       if (q?.created_at) return `quest_${new Date(q.created_at).getTime()}_${idx}`;
       if (q?.title) return `quest_${q.title.toLowerCase().replace(/[^a-z0-9]+/gi, '_')}_${idx}`;
       return `quest_${Date.now()}_${idx}`;
     };
 
-    const quests: Quest[] = sourceQuests.map((q: any, i: number) => {
+    // Map backend-provided quests into our frontend Quest shape. Treat the backend fields as the
+    // source of truth: prefer them (and attach the original object as `rawBackend`). Other fields
+    // that the frontend expects will be filled with sane defaults when missing.
+    const backendMapped: Quest[] = backendSource.map((q: any, i: number) => {
       const id = normalizeId(q, i);
+
+      // Backend is expected to provide these fields (title, description, latitude, longitude,
+      // landmark_name or location.address). We'll use them as-is when present; if missing we
+      // fallback but log to console for visibility.
+      const lat = q?.latitude ?? q?.lat ?? q?.location?.latitude ?? 0;
+      const lon = q?.longitude ?? q?.lng ?? q?.location?.longitude ?? 0;
+      const addr = q?.landmark_name ?? q?.location?.address ?? q?.address ?? '';
+
+      const mapped: Quest = {
+        id,
+        title: q.title ?? q?.name ?? '',
+        description: q.description ?? q?.details ?? '',
+        location: {
+          latitude: typeof lat === 'number' ? lat : Number(lat) || 0,
+          longitude: typeof lon === 'number' ? lon : Number(lon) || 0,
+          address: String(addr || ''),
+        },
+        // Backend may not provide reward; default to 0 but prefer backend value when present
+        reward: typeof q?.reward === 'number' ? q.reward : Number(q?.reward) || 0,
+        // Map backend's quest_type to frontend difficulty/category where appropriate
+        difficulty: (q?.difficulty as any) ?? 'easy',
+        category: q?.category ?? (q?.quest_type as any) ?? 'exploration',
+        status: completedQuestIds.includes(id) ? 'completed' : (q?.status as any) ?? 'active',
+        completionCriteria: q?.completionCriteria ?? q?.verifiable_landmark ?? '',
+        actionType:
+          (q?.actionType as any) ??
+          (q?.time_to_live_hours ? 'timed_photo' : (q?.action_type as any) ?? 'photo'),
+        actionLabel: q?.actionLabel ?? q?.action_label ?? 'Complete',
+        verificationSteps: Array.isArray(q?.verificationSteps)
+          ? q.verificationSteps
+          : q?.verifiable_landmark
+          ? [q.verifiable_landmark]
+          : q?.verification_steps ?? [],
+        quizQuestions: q?.quizQuestions ?? q?.quiz_questions,
+        rarity: q?.rarity,
+        limitedTime:
+          q?.limitedTime ??
+          (q?.time_to_live_hours
+            ? {
+                // create a limitedTime window of now -> now + hours if only TTL provided
+                start: new Date().toISOString(),
+                end: new Date(
+                  Date.now() + (Number(q.time_to_live_hours) || 0) * 3600 * 1000,
+                ).toISOString(),
+              }
+            : q?.limited_time),
+        event: q?.event,
+        multiplier: q?.multiplier,
+        repeatable: q?.repeatable ?? q?.daily ?? false,
+        daily: q?.daily ?? false,
+        hidden: q?.hidden ?? false,
+      } as Quest;
+
+      // Keep original backend object for debugging or advanced UI if needed
+      (mapped as any).rawBackend = q;
+      return mapped;
+    });
+
+    // Map any local frontend quests (legacy or custom) into Quest shape as before
+    const localMapped: Quest[] = localSource.map((q: any, i: number) => {
+      const id = normalizeId(q, i + backendMapped.length);
 
       const latitude =
         q?.location?.latitude ??
@@ -109,6 +174,12 @@ export const questApi = {
 
       return mapped;
     });
+
+    // Combine: prefer backend quests first, then append local quests that don't conflict by id
+    const seenIds = new Set<string>(backendMapped.map((b) => b.id));
+    const combined = [...backendMapped, ...localMapped.filter((l) => !seenIds.has(l.id))];
+
+    const quests: Quest[] = combined;
 
     const questData: QuestData = {
       userId,

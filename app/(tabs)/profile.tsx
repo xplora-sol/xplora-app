@@ -64,7 +64,9 @@ export default function ProfileScreen() {
     <ThemedScrollView style={styles.container}>
       <ProfileHeader username={user?.username || 'Quest Explorer'} level={level} />
 
-      <AppKitButton />
+      <View style={{ padding: 16 }}>
+        <AppKitButton />
+      </View>
 
       <TokenBalanceCard totalTokens={totalTokens} />
 

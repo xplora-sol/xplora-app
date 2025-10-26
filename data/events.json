@@ -1,39 +1,65 @@
 {
   "events": [
     {
-      "id": "ancient_path_event",
-      "title": "The Ancient Path",
-      "description": "A three-chapter mystery unravels across the city. Complete each chapter to reveal the final reward.",
-      "start": "2025-10-20T00:00:00.000Z",
-      "end": "2025-11-30T23:59:59.999Z",
-      "featuredQuestIds": ["story_ancient_path_1", "story_ancient_path_2", "story_ancient_path_3"],
-      "fomoText": "Limited time — uncover the mystery before it's gone!",
-      "bannerColor": "#9b59b6",
-      "bannerImage": "ancient_path_banner.png"
+      "id": "yomari_punhi_festival",
+      "title": "Yomari Punhi Festival",
+      "description": "Celebrate the sweet Newar festival by making, sharing, or finding yomari around Patan. Complete related quests to earn bonus rewards and cultural badges.",
+      "start": "2025-12-05T00:00:00.000Z",
+      "end": "2025-12-12T23:59:59.999Z",
+      "featuredQuestIds": ["quest_008"],
+      "fomoText": "Limited-time festival — share your yomari before it melts away!",
+      "bannerColor": "#d35400",
+      "bannerImage": "https://zip.manjultamrakar.com.np/u/yomari_punhi_event.png"
     },
     {
-      "id": "spring_fair",
-      "title": "Spring Fair",
-      "description": "Celebrate local culture with time-limited quests and special rewards.",
-      "start": "2025-11-01T00:00:00.000Z",
-      "end": "2025-11-07T23:59:59.999Z",
-      "featuredQuestIds": ["event_spring_fair_001"],
-      "fomoText": "Happening now — double rewards for early birds!",
-      "bannerColor": "#f39c12",
-      "bannerImage": "spring_fair_banner.png"
+      "id": "patan_light_festival",
+      "title": "Festival of Lights",
+      "description": "Patan glows bright for three nights! Capture the illuminated courtyards and join community lantern walks for double XP rewards.",
+      "start": "2025-11-12T00:00:00.000Z",
+      "end": "2025-11-14T23:59:59.999Z",
+      "featuredQuestIds": ["quest_010"],
+      "fomoText": "Only three nights to light up your profile!",
+      "bannerColor": "#f1c40f",
+      "bannerImage": "https://zip.manjultamrakar.com.np/u/tihar_event.png"
+    },
+    {
+      "id": "rato_machhindranath_jatra",
+      "title": "Rato Machhindranath Jatra",
+      "description": "The grand chariot procession moves through Patan’s streets. Track the chariot, complete festival challenges, and capture the spirit of devotion.",
+      "start": "2025-05-01T00:00:00.000Z",
+      "end": "2025-05-10T23:59:59.999Z",
+      "featuredQuestIds": ["quest_015"],
+      "fomoText": "Catch the chariot before it moves on!",
+      "bannerColor": "#c0392b",
+      "bannerImage": "https://zip.manjultamrakar.com.np/u/rato_machindranath_event.png"
     },
     {
       "id": "hidden_shrine_event",
-      "title": "Secret Shrine",
-      "description": "A secret ceremony is whispered about. Find the hidden shrine nearby to unlock its rewards.",
+      "title": "The Hidden Shrine",
+      "description": "A secret ceremony is whispered about behind Mahaboudha. Discover the hidden shrine to earn legendary rewards.",
       "start": "2025-10-20T00:00:00.000Z",
       "end": "2025-12-31T23:59:59.999Z",
-      "featuredQuestIds": ["hidden_shrine_quest"],
-      "fomoText": "Shh... something secret is nearby.",
-      "bannerColor": "#2ecc71",
-      "bannerImage": "hidden_shrine_banner.png",
+      "featuredQuestIds": ["quest_019"],
+      "fomoText": "Shh... something ancient waits to be found.",
+      "bannerColor": "#27ae60",
+      "bannerImage": "https://zip.manjultamrakar.com.np/u/hidden_shrine_event.png",
       "hidden": true,
-      "location": { "latitude": 27.7135, "longitude": 85.315, "address": "Hidden Shrine" }
+      "location": {
+        "latitude": 27.6752,
+        "longitude": 85.3257,
+        "address": "Behind Mahaboudha Temple, Patan"
+      }
+    },
+    {
+      "id": "ancient_path_event",
+      "title": "The Ancient Path",
+      "description": "A three-chapter mystery unravels across Lalitpur. Complete each part to reveal the truth about Yala’s forgotten guardian.",
+      "start": "2025-10-20T00:00:00.000Z",
+      "end": "2025-11-30T23:59:59.999Z",
+      "featuredQuestIds": ["quest_005", "quest_019", "quest_020"],
+      "fomoText": "Limited time — uncover the legend before it fades away!",
+      "bannerColor": "#8e44ad",
+      "bannerImage": "https://zip.manjultamrakar.com.np/u/ancient_path_event.png"
     }
   ]
 }

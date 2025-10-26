@@ -1,7 +1,6 @@
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View, ImageSourcePropType } from 'react-native';
+import { Image, ImageSourcePropType, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Countdown } from './countdown';
-import { LinearGradient } from 'expo-linear-gradient';
 
 export function EventsBanner({
   title,
@@ -18,34 +17,29 @@ export function EventsBanner({
 }) {
   return (
     <TouchableOpacity activeOpacity={0.9} onPress={onPress}>
-      <View style={[styles.container, { borderColor: color || 'transparent' }]}> 
-        {/* Backdrop image */}
-        {bannerImageSrc ? (
-          <Image
-            source={typeof bannerImageSrc === 'string' ? { uri: bannerImageSrc } : (bannerImageSrc as ImageSourcePropType)}
-            style={styles.backdrop}
-            resizeMode="cover"
-          />
-        ) : null}
-
-        {/* Gradient overlay for dramatic/gamey look */}
-        <LinearGradient
-          colors={[color ? `${color}CC` : 'rgba(0,0,0,0.45)', 'rgba(0,0,0,0.15)']}
-          style={StyleSheet.absoluteFill}
-        />
-
+      <View style={[styles.container, { borderColor: color || 'transparent' }]}>
         <View style={styles.content}>
           <View style={styles.left}>
             <Text style={styles.title}>{title}</Text>
             {endIso ? <Countdown endIso={endIso} /> : null}
           </View>
+
+          {/* Square banner thumbnail on the right for square images */}
           <View style={styles.right}>
             {bannerImageSrc ? (
+              <Image
+                source={
+                  typeof bannerImageSrc === 'string'
+                    ? { uri: bannerImageSrc }
+                    : (bannerImageSrc as ImageSourcePropType)
+                }
+                style={styles.bannerImageSquare}
+                resizeMode="cover"
+              />
+            ) : (
               <View style={styles.ctaBadge}>
                 <Text style={styles.cta}>View</Text>
               </View>
-            ) : (
-              <Text style={styles.cta}>View</Text>
             )}
           </View>
         </View>
@@ -56,17 +50,12 @@ export function EventsBanner({
 
 const styles = StyleSheet.create({
   container: {
-    height: 92,
+    height: 112,
     borderRadius: 14,
     overflow: 'hidden',
     borderWidth: 1,
     marginVertical: 8,
     backgroundColor: '#00000022',
-  },
-  backdrop: {
-    ...StyleSheet.absoluteFillObject,
-    width: undefined,
-    height: undefined,
   },
   content: {
     flex: 1,
@@ -100,4 +89,10 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   bannerImage: { width: 88, height: 56, borderRadius: 8 },
+  bannerImageSquare: {
+    width: 96,
+    height: 96,
+    borderRadius: 12,
+    backgroundColor: '#00000022',
+  },
 });

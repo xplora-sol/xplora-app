@@ -2,290 +2,104 @@
   "quests": [
     {
       "id": "quest_001",
-      "title": "Thamel Coffee Explorer",
-      "description": "Visit a popular Thamel coffee shop and take a photo",
+      "title": "Golden Temple Explorer",
+      "description": "Visit Hiranya Varna Mahavihar (Golden Temple) and take a photo of the golden facade.",
       "location": {
-        "latitude": 27.7154,
-        "longitude": 85.3123,
-        "address": "Thamel, Kathmandu"
+        "latitude": 27.6724,
+        "longitude": 85.3256,
+        "address": "Hiranya Varna Mahavihar, Patan"
       },
-      "reward": 50,
+      "reward": 60,
       "difficulty": "easy",
-      "category": "social",
+      "category": "exploration",
       "status": "active",
-      "completionCriteria": "Take a photo at the coffee shop",
+      "completionCriteria": "Take a photo at the temple entrance",
       "actionType": "photo",
-      "actionLabel": "Take Photo",
+      "actionLabel": "Capture Temple",
       "verificationSteps": [
-        "Take a photo at the coffee shop",
-        "Make sure the coffee shop name is visible",
-        "Upload the photo to complete"
+        "Visit Hiranya Varna Mahavihar",
+        "Take a photo of the golden facade",
+        "Ensure temple details are visible",
+        "Upload to complete"
       ],
       "rarity": "common",
       "multiplier": 1
     },
     {
       "id": "quest_002",
-      "title": "Ratna Park Fitness Challenge",
-      "description": "Complete 20 push-ups at Ratna Park early in the morning",
+      "title": "Patan Durbar Square Heritage Hunt",
+      "description": "Explore Patan Durbar Square and identify three unique sculptures.",
       "location": {
-        "latitude": 27.7056,
-        "longitude": 85.3152,
-        "address": "Ratna Park, Kathmandu"
+        "latitude": 27.6736,
+        "longitude": 85.3251,
+        "address": "Patan Durbar Square, Lalitpur"
       },
-      "reward": 100,
-      "difficulty": "medium",
-      "category": "fitness",
-      "status": "active",
-      "completionCriteria": "Complete 20 push-ups and verify with photo",
-      "actionType": "photo",
-      "actionLabel": "Record Activity",
-      "verificationSteps": [
-        "Arrive at Ratna Park",
-        "Complete 20 push-ups",
-        "Take a photo or video as proof",
-        "Submit your workout"
-      ]
-    },
-    {
-      "id": "quest_003",
-      "title": "Street Art in Patan",
-      "description": "Find and photograph a mural in Patan's Kupondole area",
-      "location": {
-        "latitude": 27.6851,
-        "longitude": 85.3157,
-        "address": "Kupondole, Lalitpur"
-      },
-      "reward": 75,
-      "difficulty": "easy",
-      "category": "exploration",
-      "status": "active",
-      "completionCriteria": "Take a photo of the mural",
-      "actionType": "photo",
-      "actionLabel": "Capture Art",
-      "verificationSteps": [
-        "Navigate to Kupondole area",
-        "Find the street art mural",
-        "Take a clear photo of the artwork",
-        "Share your discovery"
-      ]
-    },
-    {
-      "id": "quest_004",
-      "title": "Swayambhunath Heritage Visit",
-      "description": "Visit Swayambhunath Stupa and learn about its history",
-      "location": {
-        "latitude": 27.7149,
-        "longitude": 85.2901,
-        "address": "Swayambhunath Stupa, Kathmandu"
-      },
-      "reward": 150,
+      "reward": 120,
       "difficulty": "medium",
       "category": "education",
       "status": "active",
-      "completionCriteria": "Answer 3 trivia questions about the site",
-      "actionType": "quiz",
-      "actionLabel": "Take Quiz",
+      "completionCriteria": "Upload photos of three distinct sculptures",
+      "actionType": "photo",
+      "actionLabel": "Document Artifacts",
       "verificationSteps": [
-        "Visit Swayambhunath Stupa",
-        "Explore and learn about the site",
-        "Answer trivia questions",
-        "Score 2/3 or higher to complete"
+        "Explore Durbar Square",
+        "Find 3 unique sculptures",
+        "Take clear photos",
+        "Upload all to complete"
       ],
-      "quizQuestions": [
-        {
-          "question": "What is Swayambhunath commonly known as?",
-          "options": ["Monkey Temple", "Stupa Temple", "Buddha Temple", "Heritage Temple"],
-          "correctAnswer": "Monkey Temple"
-        },
-        {
-          "question": "Approximately how old is Swayambhunath?",
-          "options": ["500 years", "1000 years", "1500 years", "2000+ years"],
-          "correctAnswer": "2000+ years"
-        },
-        {
-          "question": "What do the eyes on the stupa represent?",
-          "options": ["Buddha's all-seeing eyes", "Protection", "Wisdom", "Peace"],
-          "correctAnswer": "Buddha's all-seeing eyes"
-        }
-      ],
-      "rarity": "common",
-      "multiplier": 1
+      "rarity": "uncommon",
+      "multiplier": 1.2
     },
     {
-      "id": "quest_005",
-      "title": "Bhojan Mandala",
-      "description": "Try a new local food stall and share your experience",
-      "location": {
-        "latitude": 27.708,
-        "longitude": 85.3268,
-        "address": "Basantapur Durbar Square, Kathmandu"
-      },
-      "reward": 80,
-      "difficulty": "easy",
-      "category": "food",
-      "status": "active",
-      "completionCriteria": "Take a photo of your meal and rate it",
-      "actionType": "photo_rating",
-      "actionLabel": "Share Experience",
-      "verificationSteps": [
-        "Find a local food stall",
-        "Order and enjoy a meal",
-        "Take a photo of your food",
-        "Rate your experience (1-5 stars)"
-      ]
-    },
-    {
-      "id": "quest_006",
-      "title": "Bagmati Cleanup Hero",
-      "description": "Participate in a Bagmati River cleanup and collect trash",
-      "location": {
-        "latitude": 27.6855,
-        "longitude": 85.3285,
-        "address": "Bagmati River, Teku"
-      },
-      "reward": 200,
-      "difficulty": "hard",
-      "category": "community",
-      "status": "active",
-      "completionCriteria": "Collect and photograph 10 pieces of trash",
-      "actionType": "checkin_photo",
-      "actionLabel": "Check In & Upload",
-      "verificationSteps": [
-        "Check in at the cleanup location",
-        "Collect at least 10 pieces of trash",
-        "Take a photo of collected trash",
-        "Log your contribution"
-      ]
-    },
-    {
-      "id": "quest_007",
-      "title": "Sunrise at Nagarkot",
-      "description": "Hike or travel to Nagarkot for sunrise photos",
-      "location": {
-        "latitude": 27.7172,
-        "longitude": 85.52,
-        "address": "Nagarkot, Bhaktapur"
-      },
-      "reward": 250,
-      "difficulty": "hard",
-      "category": "fitness",
-      "status": "active",
-      "completionCriteria": "Reach viewpoint before 6 AM and take sunrise photo",
-      "actionType": "timed_photo",
-      "actionLabel": "Capture Sunrise",
-      "verificationSteps": [
-        "Arrive at Nagarkot viewpoint",
-        "Be there before 6:00 AM",
-        "Take a photo of the sunrise",
-        "Timestamp will verify early arrival"
-      ]
-    },
-    {
-      "id": "quest_008",
-      "title": "Support Local Bookstore",
-      "description": "Shop at a local bookstore in Kathmandu and leave a review",
-      "location": {
-        "latitude": 27.7124,
-        "longitude": 85.3115,
-        "address": "Pilgrims Book House, Thamel"
-      },
-      "reward": 100,
-      "difficulty": "easy",
-      "category": "social",
-      "status": "completed",
-      "completionCriteria": "Make a purchase and write a review",
-      "actionType": "review",
-      "actionLabel": "Write Review",
-      "verificationSteps": [
-        "Visit the bookstore",
-        "Make a purchase",
-        "Write a review (min 50 characters)",
-        "Share your experience"
-      ],
-      "rarity": "common",
-      "multiplier": 1
-    },
-    {
-      "id": "daily_001",
-      "title": "Daily Check-In",
-      "description": "Check in today to earn a small token bonus. Repeatable daily.",
-      "location": {
-        "latitude": 27.7124,
-        "longitude": 85.3115,
-        "address": "Anywhere"
-      },
-      "reward": 10,
-      "difficulty": "easy",
-      "category": "daily",
-      "status": "active",
-      "completionCriteria": "Open the app and check in once today",
-      "actionType": "review",
-      "actionLabel": "Check In",
-      "verificationSteps": ["Open the app", "Tap Check In"],
-      "repeatable": true,
-      "daily": true,
-      "rarity": "common",
-      "multiplier": 1
-    },
-    {
-      "id": "event_spring_fair_001",
-      "title": "Spring Fair Limited Quest",
-      "description": "Limited time event quest — visit the Spring Fair and capture a moment. This quest is available for a short window.",
-      "location": {
-        "latitude": 27.715,
-        "longitude": 85.313,
-        "address": "Spring Fair Grounds"
-      },
-      "reward": 200,
+      "id": "quest_003",
+      "title": "Yomari Punhi Sweet Quest",
+      "description": "Celebrate Yomari Punhi by buying or making a yomari and sharing a photo.",
+      "location": { "latitude": 27.676, "longitude": 85.325, "address": "Patan Durbar Square" },
+      "reward": 180,
       "difficulty": "medium",
       "category": "event",
       "status": "active",
-      "completionCriteria": "Take a photo at the fair during the event window",
+      "completionCriteria": "Upload a photo of your yomari during the festival window",
       "actionType": "photo",
-      "actionLabel": "Capture",
+      "actionLabel": "Share Yomari",
       "verificationSteps": [
-        "Arrive during the Spring Fair",
-        "Take a clear photo",
-        "Upload as proof"
+        "Celebrate Yomari Punhi",
+        "Buy or make a yomari",
+        "Take a photo",
+        "Upload during event period"
       ],
-      "limitedTime": {
-        "start": "2025-11-01T00:00:00.000Z",
-        "end": "2025-11-07T23:59:59.999Z"
-      },
+      "limitedTime": { "start": "2025-12-05T00:00:00.000Z", "end": "2025-12-12T23:59:59.999Z" },
+      "event": { "id": "yomari_punhi_festival", "step": 1, "totalSteps": 1, "isStory": false },
       "rarity": "rare",
-      "multiplier": 1.5
+      "multiplier": 1.6
     },
     {
-      "id": "story_ancient_path_1",
-      "title": "Ancient Path — Chapter 1",
-      "description": "A mysterious letter appears in town. Begin the story by visiting the old gate.",
-      "location": {
-        "latitude": 27.71,
-        "longitude": 85.31,
-        "address": "Old Gate"
-      },
-      "reward": 80,
-      "difficulty": "easy",
-      "category": "story",
+      "id": "quest_004",
+      "title": "Patan Light Festival",
+      "description": "Capture the illuminated courtyards during the Festival of Lights.",
+      "location": { "latitude": 27.674, "longitude": 85.3253, "address": "Durbar Square, Patan" },
+      "reward": 220,
+      "difficulty": "medium",
+      "category": "event",
       "status": "active",
-      "completionCriteria": "Visit the Old Gate and take a photo of the plaque",
+      "completionCriteria": "Capture a night photo of lights",
       "actionType": "photo",
-      "actionLabel": "Investigate",
-      "verificationSteps": ["Find the Old Gate", "Take a photo"],
-      "event": { "id": "ancient_path", "step": 1, "totalSteps": 3, "isStory": true },
-      "rarity": "epic",
+      "actionLabel": "Capture Lights",
+      "verificationSteps": [
+        "Attend Light Festival",
+        "Find illuminated courtyard",
+        "Take night photo"
+      ],
+      "limitedTime": { "start": "2025-11-12T00:00:00.000Z", "end": "2025-11-14T23:59:59.999Z" },
+      "event": { "id": "patan_light_festival", "step": 1, "totalSteps": 1, "isStory": false },
+      "rarity": "rare",
       "multiplier": 2
     },
     {
-      "id": "story_ancient_path_2",
-      "title": "Ancient Path — Chapter 2",
-      "description": "Follow the footsteps left in the alley. The next clue awaits.",
-      "location": {
-        "latitude": 27.711,
-        "longitude": 85.311,
-        "address": "Old Alley"
-      },
+      "id": "quest_005",
+      "title": "Ancient Alley Discovery",
+      "description": "Follow the footsteps left in Patan's ancient alleys. Collect a hidden token.",
+      "location": { "latitude": 27.671, "longitude": 85.319, "address": "Old Alley, Patan" },
       "reward": 120,
       "difficulty": "medium",
       "category": "story",
@@ -294,39 +108,221 @@
       "actionType": "photo",
       "actionLabel": "Collect Token",
       "verificationSteps": ["Search alley", "Collect token", "Take photo"],
-      "event": { "id": "ancient_path", "step": 2, "totalSteps": 3, "isStory": true },
+      "event": { "id": "ancient_path_event", "step": 2, "totalSteps": 3, "isStory": true },
       "rarity": "epic",
       "multiplier": 2
     },
     {
-      "id": "story_ancient_path_3",
-      "title": "Ancient Path — Finale",
-      "description": "The secret is revealed at the old shrine. Complete the final ritual.",
-      "location": {
-        "latitude": 27.712,
-        "longitude": 85.312,
-        "address": "Old Shrine"
-      },
-      "reward": 300,
+      "id": "quest_006",
+      "title": "Rato Machhindranath Chariot Watch",
+      "description": "Track the procession of Rato Machhindranath and capture a key moment.",
+      "location": { "latitude": 27.673, "longitude": 85.327, "address": "Patan Durbar Square" },
+      "reward": 200,
+      "difficulty": "hard",
+      "category": "event",
+      "status": "active",
+      "completionCriteria": "Photograph the chariot procession",
+      "actionType": "photo",
+      "actionLabel": "Capture Procession",
+      "verificationSteps": ["Locate chariot", "Capture key moment", "Upload photo"],
+      "limitedTime": { "start": "2025-05-01T00:00:00.000Z", "end": "2025-05-10T23:59:59.999Z" },
+      "event": { "id": "rato_machhindranath_jatra", "step": 1, "totalSteps": 1, "isStory": false },
+      "rarity": "rare",
+      "multiplier": 2
+    },
+    {
+      "id": "quest_007",
+      "title": "Hidden Shrine Discovery",
+      "description": "A whisper tells of a hidden shrine nearby. Discover it to claim the reward.",
+      "location": { "latitude": 27.7135, "longitude": 85.315, "address": "Hidden Shrine" },
+      "reward": 400,
       "difficulty": "hard",
       "category": "story",
       "status": "active",
-      "completionCriteria": "Perform ritual and capture the moment",
+      "hidden": true,
+      "completionCriteria": "Find the hidden shrine and take a photo",
       "actionType": "photo",
-      "actionLabel": "Reveal",
-      "verificationSteps": ["Reach shrine", "Perform steps", "Take photo"],
-      "event": { "id": "ancient_path", "step": 3, "totalSteps": 3, "isStory": true },
+      "actionLabel": "Discover",
+      "verificationSteps": ["Locate shrine", "Take photo"],
+      "event": { "id": "hidden_shrine_event", "step": 1, "totalSteps": 1, "isStory": true },
+      "rarity": "legendary",
+      "multiplier": 4
+    },
+    {
+      "id": "quest_008",
+      "title": "Kupondole Street Art Hunt",
+      "description": "Photograph street art murals in Kupondole.",
+      "location": { "latitude": 27.6851, "longitude": 85.3157, "address": "Kupondole, Lalitpur" },
+      "reward": 80,
+      "difficulty": "easy",
+      "category": "exploration",
+      "status": "active",
+      "completionCriteria": "Take a photo of the mural",
+      "actionType": "photo",
+      "actionLabel": "Capture Art",
+      "verificationSteps": ["Navigate to Kupondole", "Find mural", "Take photo", "Upload photo"],
+      "rarity": "common",
+      "multiplier": 1
+    },
+    {
+      "id": "quest_009",
+      "title": "Siddhi Lakshmi Temple Trivia",
+      "description": "Answer questions about Siddhi Lakshmi Temple history.",
+      "location": {
+        "latitude": 27.6765,
+        "longitude": 85.323,
+        "address": "Siddhi Lakshmi Temple, Patan"
+      },
+      "reward": 150,
+      "difficulty": "medium",
+      "category": "education",
+      "status": "active",
+      "completionCriteria": "Answer 3 trivia questions",
+      "actionType": "quiz",
+      "actionLabel": "Take Quiz",
+      "verificationSteps": ["Visit temple", "Answer 3 questions", "Score 2/3 or higher"],
+      "quizQuestions": [
+        {
+          "question": "What is Siddhi Lakshmi Temple famous for?",
+          "options": ["Festivals", "Architecture", "Local Rituals", "All"],
+          "correctAnswer": "All"
+        },
+        {
+          "question": "Which deity is worshiped?",
+          "options": ["Lakshmi", "Durga", "Buddha", "Shiva"],
+          "correctAnswer": "Lakshmi"
+        },
+        {
+          "question": "Temple is located in?",
+          "options": ["Kathmandu", "Lalitpur", "Bhaktapur", "Patan"],
+          "correctAnswer": "Patan"
+        }
+      ],
+      "rarity": "common",
+      "multiplier": 1
+    },
+    {
+      "id": "quest_010",
+      "title": "Festival Night Capture",
+      "description": "Capture the community lantern walk during the Festival of Lights.",
+      "location": { "latitude": 27.674, "longitude": 85.3253, "address": "Durbar Square, Patan" },
+      "reward": 200,
+      "difficulty": "medium",
+      "category": "event",
+      "status": "active",
+      "completionCriteria": "Photograph a lantern walk",
+      "actionType": "photo",
+      "actionLabel": "Capture Lanterns",
+      "verificationSteps": [
+        "Attend lantern walk",
+        "Take night photo of participants",
+        "Upload photo during event"
+      ],
+      "limitedTime": { "start": "2025-11-12T00:00:00.000Z", "end": "2025-11-14T23:59:59.999Z" },
+      "event": { "id": "patan_light_festival", "step": 1, "totalSteps": 1, "isStory": false },
+      "rarity": "rare",
+      "multiplier": 2
+    },
+    {
+      "id": "quest_011",
+      "title": "Ancient Path: Chapter One",
+      "description": "Begin the Ancient Path mystery by finding the first hidden symbol.",
+      "location": { "latitude": 27.672, "longitude": 85.3195, "address": "Lalitpur Old Town" },
+      "reward": 150,
+      "difficulty": "medium",
+      "category": "story",
+      "status": "active",
+      "completionCriteria": "Locate first hidden symbol and take a photo",
+      "actionType": "photo",
+      "actionLabel": "Discover Symbol",
+      "verificationSteps": ["Find symbol", "Take clear photo", "Upload to complete chapter"],
+      "event": { "id": "ancient_path_event", "step": 1, "totalSteps": 3, "isStory": true },
+      "rarity": "epic",
+      "multiplier": 2
+    },
+    {
+      "id": "quest_012",
+      "title": "Ancient Path: Chapter Two",
+      "description": "Collect clues hidden along the old market streets of Patan.",
+      "location": { "latitude": 27.671, "longitude": 85.32, "address": "Old Market, Patan" },
+      "reward": 180,
+      "difficulty": "medium",
+      "category": "story",
+      "status": "active",
+      "completionCriteria": "Photograph all hidden clues",
+      "actionType": "photo",
+      "actionLabel": "Collect Clues",
+      "verificationSteps": ["Locate hidden clues", "Take photos", "Upload all to continue story"],
+      "event": { "id": "ancient_path_event", "step": 2, "totalSteps": 3, "isStory": true },
+      "rarity": "epic",
+      "multiplier": 2
+    },
+    {
+      "id": "quest_013",
+      "title": "Ancient Path: Chapter Three",
+      "description": "Uncover the final guardian statue hidden near the old temple.",
+      "location": { "latitude": 27.67, "longitude": 85.321, "address": "Old Temple, Patan" },
+      "reward": 250,
+      "difficulty": "hard",
+      "category": "story",
+      "status": "active",
+      "completionCriteria": "Photograph the guardian statue",
+      "actionType": "photo",
+      "actionLabel": "Reveal Guardian",
+      "verificationSteps": ["Locate guardian statue", "Take photo", "Upload to complete story"],
+      "event": { "id": "ancient_path_event", "step": 3, "totalSteps": 3, "isStory": true },
       "rarity": "legendary",
       "multiplier": 3
     },
     {
-      "id": "hidden_shrine_quest",
+      "id": "quest_014",
+      "title": "Yomari Punhi Sweet Quest",
+      "description": "Celebrate Yomari Punhi by buying or making a yomari and sharing a photo.",
+      "location": { "latitude": 27.676, "longitude": 85.325, "address": "Patan Durbar Square" },
+      "reward": 180,
+      "difficulty": "medium",
+      "category": "event",
+      "status": "active",
+      "completionCriteria": "Upload a photo of your yomari during the festival window",
+      "actionType": "photo",
+      "actionLabel": "Share Yomari",
+      "verificationSteps": [
+        "Celebrate Yomari Punhi",
+        "Buy or make a yomari",
+        "Take a photo",
+        "Upload during event period"
+      ],
+      "limitedTime": { "start": "2025-12-05T00:00:00.000Z", "end": "2025-12-12T23:59:59.999Z" },
+      "event": { "id": "yomari_punhi_festival", "step": 1, "totalSteps": 1, "isStory": false },
+      "rarity": "rare",
+      "multiplier": 1.6
+    },
+    {
+      "id": "quest_015",
+      "title": "Rato Machhindranath Chariot Watch",
+      "description": "Track the procession of Rato Machhindranath and capture a key moment.",
+      "location": { "latitude": 27.673, "longitude": 85.327, "address": "Patan Durbar Square" },
+      "reward": 200,
+      "difficulty": "hard",
+      "category": "event",
+      "status": "active",
+      "completionCriteria": "Photograph the chariot procession",
+      "actionType": "photo",
+      "actionLabel": "Capture Procession",
+      "verificationSteps": ["Locate chariot", "Capture key moment", "Upload photo"],
+      "limitedTime": { "start": "2025-05-01T00:00:00.000Z", "end": "2025-05-10T23:59:59.999Z" },
+      "event": { "id": "rato_machhindranath_jatra", "step": 1, "totalSteps": 1, "isStory": false },
+      "rarity": "rare",
+      "multiplier": 2
+    },
+    {
+      "id": "quest_016",
       "title": "Hidden Shrine Discovery",
       "description": "A whisper tells of a hidden shrine nearby. Discover it to claim the reward.",
       "location": {
-        "latitude": 27.7135,
-        "longitude": 85.315,
-        "address": "Hidden Shrine"
+        "latitude": 27.6752,
+        "longitude": 85.3257,
+        "address": "Behind Mahaboudha Temple, Patan"
       },
       "reward": 400,
       "difficulty": "hard",
@@ -340,6 +336,175 @@
       "event": { "id": "hidden_shrine_event", "step": 1, "totalSteps": 1, "isStory": true },
       "rarity": "legendary",
       "multiplier": 4
+    },
+    {
+      "id": "quest_017",
+      "title": "Durbar Square Night Photography",
+      "description": "Capture the beauty of Patan Durbar Square under night lights.",
+      "location": { "latitude": 27.6736, "longitude": 85.3251, "address": "Patan Durbar Square" },
+      "reward": 120,
+      "difficulty": "medium",
+      "category": "exploration",
+      "status": "active",
+      "completionCriteria": "Upload night photo of Durbar Square",
+      "actionType": "photo",
+      "actionLabel": "Capture Night",
+      "verificationSteps": ["Visit Durbar Square at night", "Take photo", "Upload photo"],
+      "rarity": "uncommon",
+      "multiplier": 1.5
+    },
+    {
+      "id": "quest_018",
+      "title": "Local Street Food Tasting",
+      "description": "Taste three traditional street foods in Patan and upload a photo.",
+      "location": { "latitude": 27.6745, "longitude": 85.324, "address": "Local Market, Patan" },
+      "reward": 100,
+      "difficulty": "easy",
+      "category": "food",
+      "status": "active",
+      "completionCriteria": "Upload photos of three street foods",
+      "actionType": "photo",
+      "actionLabel": "Share Food",
+      "verificationSteps": ["Taste street foods", "Take photos", "Upload photos"],
+      "rarity": "common",
+      "multiplier": 1
+    },
+    {
+      "id": "quest_019",
+      "title": "Hidden Clues Exploration",
+      "description": "Discover hidden clues around the city for Ancient Path.",
+      "location": { "latitude": 27.672, "longitude": 85.322, "address": "Patan Streets" },
+      "reward": 180,
+      "difficulty": "medium",
+      "category": "story",
+      "status": "active",
+      "completionCriteria": "Collect 3 hidden clues and upload photos",
+      "actionType": "photo",
+      "actionLabel": "Find Clues",
+      "verificationSteps": ["Search streets", "Collect clues", "Take photos", "Upload"],
+      "event": { "id": "ancient_path_event", "step": 2, "totalSteps": 3, "isStory": true },
+      "rarity": "epic",
+      "multiplier": 2
+    },
+    {
+      "id": "quest_020",
+      "title": "Temple Roof Capture",
+      "description": "Photograph intricate roof carvings of Patan temples.",
+      "location": { "latitude": 27.675, "longitude": 85.3245, "address": "Various Temples, Patan" },
+      "reward": 140,
+      "difficulty": "medium",
+      "category": "exploration",
+      "status": "active",
+      "completionCriteria": "Upload clear photos of roof carvings",
+      "actionType": "photo",
+      "actionLabel": "Capture Roof",
+      "verificationSteps": ["Visit temples", "Take roof photos", "Upload photos"],
+      "rarity": "uncommon",
+      "multiplier": 1.3
+    },
+    {
+      "id": "quest_021",
+      "title": "Festive Street Lanterns",
+      "description": "Photograph decorated streets during festival times.",
+      "location": { "latitude": 27.676, "longitude": 85.326, "address": "Street Corners, Patan" },
+      "reward": 100,
+      "difficulty": "easy",
+      "category": "event",
+      "status": "active",
+      "completionCriteria": "Upload photo of decorated streets",
+      "actionType": "photo",
+      "actionLabel": "Capture Street",
+      "verificationSteps": ["Find decorated street", "Take photo", "Upload"],
+      "rarity": "common",
+      "multiplier": 1
+    },
+    {
+      "id": "quest_022",
+      "title": "Local Handicraft Hunt",
+      "description": "Identify and photograph three local handicrafts.",
+      "location": { "latitude": 27.678, "longitude": 85.325, "address": "Patan Local Market" },
+      "reward": 130,
+      "difficulty": "medium",
+      "category": "education",
+      "status": "active",
+      "completionCriteria": "Upload photos of three handicrafts",
+      "actionType": "photo",
+      "actionLabel": "Capture Crafts",
+      "verificationSteps": ["Find handicrafts", "Take photos", "Upload photos"],
+      "rarity": "uncommon",
+      "multiplier": 1.2
+    },
+    {
+      "id": "quest_023",
+      "title": "Monastery Courtyard Meditation",
+      "description": "Visit a monastery courtyard and take a peaceful meditation photo.",
+      "location": { "latitude": 27.677, "longitude": 85.324, "address": "Local Monastery, Patan" },
+      "reward": 110,
+      "difficulty": "easy",
+      "category": "wellness",
+      "status": "active",
+      "completionCriteria": "Upload a peaceful meditation photo",
+      "actionType": "photo",
+      "actionLabel": "Meditate",
+      "verificationSteps": ["Visit monastery", "Take meditation photo", "Upload"],
+      "rarity": "common",
+      "multiplier": 1
+    },
+    {
+      "id": "quest_024",
+      "title": "Rato Machhindranath Devotee Spotting",
+      "description": "Spot and photograph devotees during the chariot procession.",
+      "location": { "latitude": 27.674, "longitude": 85.326, "address": "Durbar Square, Patan" },
+      "reward": 170,
+      "difficulty": "medium",
+      "category": "event",
+      "status": "active",
+      "completionCriteria": "Upload photos of devotees",
+      "actionType": "photo",
+      "actionLabel": "Capture Devotees",
+      "verificationSteps": ["Attend procession", "Photograph devotees", "Upload photos"],
+      "limitedTime": { "start": "2025-05-01T00:00:00.000Z", "end": "2025-05-10T23:59:59.999Z" },
+      "event": { "id": "rato_machhindranath_jatra", "step": 1, "totalSteps": 1, "isStory": false },
+      "rarity": "rare",
+      "multiplier": 2
+    },
+    {
+      "id": "quest_025",
+      "title": "Hidden Shrine Puzzle",
+      "description": "Solve the puzzle that leads to the hidden shrine.",
+      "location": {
+        "latitude": 27.6752,
+        "longitude": 85.3257,
+        "address": "Behind Mahaboudha Temple, Patan"
+      },
+      "reward": 350,
+      "difficulty": "hard",
+      "category": "story",
+      "status": "active",
+      "hidden": true,
+      "completionCriteria": "Solve puzzle and photograph solution",
+      "actionType": "photo",
+      "actionLabel": "Solve Puzzle",
+      "verificationSteps": ["Locate puzzle", "Solve it", "Take photo", "Upload"],
+      "event": { "id": "hidden_shrine_event", "step": 2, "totalSteps": 2, "isStory": true },
+      "rarity": "legendary",
+      "multiplier": 4
+    },
+    {
+      "id": "quest_026",
+      "title": "Temple Bell Photography",
+      "description": "Photograph the largest temple bells in Patan.",
+      "location": { "latitude": 27.6765, "longitude": 85.325, "address": "Major Temples, Patan" },
+      "reward": 120,
+      "difficulty": "medium",
+      "category": "exploration",
+      "status": "active",
+      "completionCriteria": "Upload photos of temple bells",
+      "actionType": "photo",
+      "actionLabel": "Capture Bells",
+      "verificationSteps": ["Locate temples", "Photograph bells", "Upload"],
+      "rarity": "uncommon",
+      "multiplier": 1.3
     }
   ]
 }

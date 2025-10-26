@@ -185,10 +185,18 @@ export default function QuestDetailsScreen() {
           </View>
           {event?.bannerImageSrc || event?.bannerImage ? (
             <View style={styles.bannerWrap}>
-              <Pressable onPress={() => Alert.alert(event.title, event.description || '')}>
+              <Pressable
+                onPress={() =>
+                  router.push({
+                    pathname: '/event/[eventId]',
+                    params: { eventId: event.id },
+                  } as any)
+                }
+              >
                 <Image
                   source={{ uri: event.bannerImageSrc || event.bannerImage }}
                   style={styles.eventBanner}
+                  resizeMode="cover"
                 />
                 <LinearGradient
                   colors={['rgba(0,0,0,0.0)', 'rgba(0,0,0,0.36)']}
@@ -202,6 +210,8 @@ export default function QuestDetailsScreen() {
               </Pressable>
             </View>
           ) : null}
+
+          {/* dev button moved to Progress screen */}
 
           {quest?.rarity ? (
             <>
@@ -292,6 +302,7 @@ export default function QuestDetailsScreen() {
           />
         </View>
       </ScrollView>
+      {/* dev modal moved to Progress screen */}
     </LinearGradient>
   );
 }
@@ -334,7 +345,7 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   bannerWrap: { marginBottom: 14, borderRadius: 12, overflow: 'hidden' },
-  eventBanner: { width: '100%', height: 150 },
+  eventBanner: { width: '100%', height: 220 },
   bannerOverlay: { position: 'absolute', left: 0, right: 0, bottom: 0, padding: 12 },
   bannerTitle: { fontSize: 16, fontWeight: '700', color: '#fff' },
   bannerFomo: { fontSize: 12, color: 'rgba(255,255,255,0.9)', marginTop: 4 },
@@ -413,3 +424,5 @@ const styles = StyleSheet.create({
   },
   progressBarFill: { height: '100%', width: '20%', borderRadius: 8 },
 });
+
+// dev styles removed (moved to Progress screen)

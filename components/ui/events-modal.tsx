@@ -1,7 +1,16 @@
 import { EventData } from '@/types/event';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { FlatList, Image, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  FlatList,
+  Image,
+  Modal,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Countdown } from './countdown';
 
 export function EventsModal({
@@ -30,44 +39,54 @@ export function EventsModal({
             data={events}
             keyExtractor={(i) => i.id}
             renderItem={({ item }) => (
-              <View style={[styles.eventRow, { borderLeftColor: item.bannerColor || '#888' }]}>
-                {item.bannerImageSrc ? (
-                  <Image
-                    source={
-                      typeof item.bannerImageSrc === 'string'
-                        ? { uri: item.bannerImageSrc }
-                        : item.bannerImageSrc
-                    }
-                    style={styles.eventThumbnail}
-                    resizeMode="cover"
-                  />
-                ) : null}
-                <View style={styles.eventInfo}>
-                  <Text style={styles.eventTitle}>{item.title}</Text>
-                  <Text style={styles.eventDesc}>{item.fomoText || item.description}</Text>
-                  <View style={{ marginTop: 6 }}>
-                    <Countdown endIso={item.end} />
+              <Pressable
+                onPress={() => {
+                  router.push({
+                    pathname: '/event/[eventId]',
+                    params: { eventId: item.id },
+                  } as any);
+                  onClose();
+                }}
+              >
+                <View style={[styles.eventRow, { borderLeftColor: item.bannerColor || '#888' }]}>
+                  {item.bannerImageSrc ? (
+                    <Image
+                      source={
+                        typeof item.bannerImageSrc === 'string'
+                          ? { uri: item.bannerImageSrc }
+                          : item.bannerImageSrc
+                      }
+                      style={styles.eventThumbnail}
+                      resizeMode="cover"
+                    />
+                  ) : null}
+                  <View style={styles.eventInfo}>
+                    <Text style={styles.eventTitle}>{item.title}</Text>
+                    <Text style={styles.eventDesc}>{item.fomoText || item.description}</Text>
+                    <View style={{ marginTop: 6 }}>
+                      <Countdown endIso={item.end} />
+                    </View>
+                  </View>
+
+                  <View style={styles.eventActions}>
+                    {item.featuredQuestIds && item.featuredQuestIds.length > 0 ? (
+                      <TouchableOpacity
+                        style={styles.openBtn}
+                        onPress={() => {
+                          // Open first featured quest for now
+                          router.push({
+                            pathname: '/quest-details',
+                            params: { questId: item.featuredQuestIds![0] },
+                          } as any);
+                          onClose();
+                        }}
+                      >
+                        <Text style={styles.openText}>Open Quest</Text>
+                      </TouchableOpacity>
+                    ) : null}
                   </View>
                 </View>
-
-                <View style={styles.eventActions}>
-                  {item.featuredQuestIds && item.featuredQuestIds.length > 0 ? (
-                    <TouchableOpacity
-                      style={styles.openBtn}
-                      onPress={() => {
-                        // Open first featured quest for now
-                        router.push({
-                          pathname: '/quest-details',
-                          params: { questId: item.featuredQuestIds![0] },
-                        });
-                        onClose();
-                      }}
-                    >
-                      <Text style={styles.openText}>Open Quest</Text>
-                    </TouchableOpacity>
-                  ) : null}
-                </View>
-              </View>
+              </Pressable>
             )}
           />
         </View>
@@ -139,8 +158,8 @@ const styles = StyleSheet.create({
   },
   eventThumbnail: {
     width: 96,
-    height: 72,
-    borderRadius: 10,
-    marginRight: 10,
+    height: 96,
+    borderRadius: 12,
+    marginRight: 12,
   },
 });
