@@ -15,6 +15,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { DevLogin } from '@/components/dev-login';
 
 const PENDING_USERNAME_KEY = '@pending_username';
 
@@ -115,6 +116,7 @@ export default function LoginScreen() {
             onConnectPress={connectWallet}
             isConnecting={isLoading}
           />
+          <DevLogin />
           <FeatureList />
         </ThemedView>
       </ScrollView>

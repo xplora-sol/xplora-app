@@ -1,6 +1,5 @@
-import { Ionicons } from '@expo/vector-icons';
-import React, { useEffect, useRef, useState } from 'react';
-import { Animated, Image, Platform, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { Animated, Image, Platform, StyleSheet, View } from 'react-native';
 
 interface UserLocationMarkerProps {
   avatarUrl?: string;
@@ -31,7 +30,6 @@ export function UserLocationMarker({
   avatarUrl = 'https://img.freepik.com/free-vector/hand-drawn-nft-style-ape-illustration_23-2149622021.jpg',
   size,
 }: UserLocationMarkerProps) {
-  const [imageLoading, setImageLoading] = useState(true);
   const pulseAnim = useRef(new Animated.Value(1)).current;
   const opacityAnim = useRef(new Animated.Value(ANIMATION_CONFIG.initialOpacity)).current;
 
@@ -114,39 +112,20 @@ export function UserLocationMarker({
           },
         ]}
       >
-        {imageLoading ? (
-          <View
-            style={[
-              styles.placeholder,
-              {
-                width: avatarSize,
-                height: avatarSize,
-                borderRadius: avatarSize / 2,
-              },
-            ]}
-          >
-            <Text>
-              <Ionicons name="people" size={20} color="#fff" />,
-            </Text>
-          </View>
-        ) : (
-          <Image
-            source={{ uri: avatarUrl }}
-            style={[
-              styles.avatar,
-              {
-                width: avatarSize,
-                height: avatarSize,
-                borderRadius: avatarSize / 2,
-              },
-            ]}
-            onLoadStart={() => setImageLoading(true)}
-            onLoadEnd={() => setImageLoading(false)}
-            resizeMode="cover"
-            accessible
-            accessibilityLabel="User avatar"
-          />
-        )}
+        <Image
+          source={{ uri: avatarUrl }}
+          style={[
+            styles.avatar,
+            {
+              width: avatarSize,
+              height: avatarSize,
+              borderRadius: avatarSize / 2,
+            },
+          ]}
+          resizeMode="cover"
+          accessible
+          accessibilityLabel="User avatar"
+        />
       </View>
 
       {/* Center Dot */}
