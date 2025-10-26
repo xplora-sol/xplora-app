@@ -15,7 +15,7 @@ export function DailiesModal({ visible, onClose }: { visible: boolean; onClose: 
   };
 
   return (
-    <Modal visible={visible} transparent animationType="slide">
+    <Modal visible={visible} transparent animationType="fade">
       <View style={styles.backdrop}>
         <View style={styles.container}>
           <View style={styles.header}>

@@ -1,5 +1,6 @@
 import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
+import { GameColors } from '@/constants/theme';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -9,7 +10,12 @@ interface TokenBalanceCardProps {
 
 export function TokenBalanceCard({ totalTokens }: TokenBalanceCardProps) {
   return (
-    <ThemedView style={styles.tokenCard}>
+    <LinearGradient
+      colors={[GameColors.secondaryDark, GameColors.secondary]}
+      start={[0, 0]}
+      end={[1, 1]}
+      style={styles.tokenCard}
+    >
       <Text style={styles.tokenEmoji}>🪙</Text>
       <View style={styles.tokenInfo}>
         <ThemedText type="bodySmall" style={styles.tokenLabel}>
@@ -19,7 +25,7 @@ export function TokenBalanceCard({ totalTokens }: TokenBalanceCardProps) {
           {totalTokens}
         </ThemedText>
       </View>
-    </ThemedView>
+    </LinearGradient>
   );
 }
 
@@ -31,7 +37,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginBottom: 20,
     borderRadius: 16,
-    backgroundColor: '#FFF3E0',
+    overflow: 'hidden',
+    shadowColor: GameColors.shadowColor,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
+    elevation: 6,
   },
   tokenEmoji: {
     fontSize: 48,
@@ -42,10 +53,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   tokenLabel: {
-    color: '#F57C00',
+    color: '#FFF',
     marginBottom: 4,
   },
   tokenAmount: {
-    color: '#F57C00',
+    color: '#FFF',
   },
 });

@@ -2,15 +2,16 @@ import { DevTools } from '@/components/dev-tools';
 import { ThemedScrollView } from '@/components/themed-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
+import { GameColors } from '@/constants/theme';
 import { useAuth } from '@/hooks/query/use-auth';
 import { useQuestStatsQuery, useQuests } from '@/hooks/query/use-quests';
 import { AchievementCard } from '@/sections/Profile/achievement-card';
-import { CategoryProgressCard } from '@/sections/Profile/category-progress-card';
 import { NotificationSettingsCard } from '@/sections/Profile/notification-settings-card';
 import { ProfileHeader } from '@/sections/Profile/profile-header';
 import { ProfileStatsGrid } from '@/sections/Profile/profile-stats-grid';
 import { TokenBalanceCard } from '@/sections/Profile/token-balance-card';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 
 import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
@@ -23,7 +24,7 @@ export default function ProfileScreen() {
   const { user, logout } = useAuth();
   const { activeQuests, completedQuests, totalQuests, completionRate, totalTokens, level } =
     useQuestStatsQuery();
-  const { achievements, getCategoryStats } = useQuests();
+  const { achievements } = useQuests();
   const { disconnect } = useAppKit();
 
   const handleLogout = () => {
@@ -48,7 +49,7 @@ export default function ProfileScreen() {
     );
   };
 
-  const categoryStats = getCategoryStats();
+  // category stats available from hooks if needed
 
   const profileStats = [
     { value: completedQuests.length, label: 'Completed' },
@@ -57,11 +58,7 @@ export default function ProfileScreen() {
     { value: `${completionRate}%`, label: 'Success Rate' },
   ];
 
-  const categoryList = Object.entries(categoryStats).map(([category, stats]) => ({
-    category,
-    total: stats.total,
-    completed: stats.completed,
-  }));
+  // categoryList available for future CategoryProgress rendering
 
   return (
     <ThemedScrollView style={styles.container}>
@@ -133,10 +130,17 @@ export default function ProfileScreen() {
       </ThemedView>
 
       <ThemedView style={styles.section}>
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout} activeOpacity={0.8}>
-          <Ionicons name="log-out-outline" size={24} color="#FF6B6B" />
-          <ThemedText style={styles.logoutText}>Logout</ThemedText>
-        </TouchableOpacity>
+        <LinearGradient
+          colors={[GameColors.primaryDark, GameColors.primary]}
+          start={[0, 0]}
+          end={[1, 0]}
+          style={styles.logoutGradient}
+        >
+          <TouchableOpacity style={styles.logoutButton} onPress={handleLogout} activeOpacity={0.8}>
+            <Ionicons name="log-out-outline" size={20} color="#fff" />
+            <ThemedText style={styles.logoutText}>Logout</ThemedText>
+          </TouchableOpacity>
+        </LinearGradient>
       </ThemedView>
 
       {/* Dev Tools - Only visible in development */}
@@ -190,14 +194,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 16,
     borderRadius: 12,
-    borderWidth: 2,
-    borderColor: '#FF6B6B',
+    backgroundColor: 'transparent',
     gap: 12,
   },
   logoutText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#FF6B6B',
+    color: '#fff',
+  },
+  logoutGradient: {
+    borderRadius: 12,
+    marginHorizontal: 6,
+    overflow: 'hidden',
+    shadowColor: GameColors.shadowColor,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.25,
+    shadowRadius: 16,
+    elevation: 8,
   },
   bottomPadding: {
     height: 40,

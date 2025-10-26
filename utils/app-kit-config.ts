@@ -1,6 +1,6 @@
 import '@walletconnect/react-native-compat';
 import { storage } from './async-storage';
-import { createAppKit, solana } from '@reown/appkit-react-native';
+import { createAppKit, solana, solanaDevnet, solanaTestnet } from '@reown/appkit-react-native';
 import { solanaAdapter } from './solana-adapter';
 import { PhantomConnector, SolflareConnector } from '@reown/appkit-solana-react-native';
 import * as Clipboard from 'expo-clipboard';
@@ -11,12 +11,12 @@ const IS_DEV = process.env.NODE_ENV === 'development';
 
 export const appKit = createAppKit({
   projectId,
-  networks: [solana],
+  networks: [solana, solanaDevnet, solanaTestnet],
   adapters: [solanaAdapter],
   storage: storage,
   extraConnectors: [
-    new PhantomConnector({ cluster: 'mainnet-beta' }), // Or 'devnet', 'testnet'
-    new SolflareConnector({ cluster: 'mainnet-beta' }), // Or 'devnet', 'testnet'
+    new PhantomConnector({ cluster: 'devnet' }), // Or 'devnet', 'testnet', 'mainnet-beta'
+    new SolflareConnector({ cluster: 'devnet' }), // Or 'devnet', 'testnet'
   ],
 
   metadata: {

@@ -66,7 +66,7 @@ export default function ProgressScreen() {
 
       <ProgressStatsGrid stats={statsData} />
 
-      <ProgressBar current={totalTokens} total={totalPossibleTokens} label="Overall Progress" />
+      {/* <ProgressBar current={totalTokens} total={totalPossibleTokens} label="Overall Progress" /> */}
 
       <FilterButtons
         filters={filterOptions}

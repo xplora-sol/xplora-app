@@ -245,19 +245,26 @@ export default function MapScreen() {
           </>
         )}
 
-        {activeQuests.map((quest) => (
-          <QuestMarker
-            key={quest.id}
-            id={quest.id}
-            latitude={quest.location.latitude}
-            longitude={quest.location.longitude}
-            title={quest.title}
-            difficulty={quest.difficulty as 'easy' | 'medium' | 'hard'}
-            category={quest.category}
-            reward={quest.reward}
-            onPress={handleMarkerPress}
-          />
-        ))}
+        {activeQuests
+          .filter(
+            (q) =>
+              typeof q.location?.latitude === 'number' &&
+              typeof q.location?.longitude === 'number' &&
+              (q.location.latitude !== 0 || q.location.longitude !== 0),
+          )
+          .map((quest) => (
+            <QuestMarker
+              key={quest.id}
+              id={quest.id}
+              latitude={quest.location.latitude}
+              longitude={quest.location.longitude}
+              title={quest.title}
+              difficulty={quest.difficulty as 'easy' | 'medium' | 'hard'}
+              category={quest.category}
+              reward={quest.reward}
+              onPress={handleMarkerPress}
+            />
+          ))}
       </MapView>
 
       {/* Top Overlay Container */}

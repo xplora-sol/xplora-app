@@ -21,7 +21,8 @@ export function SecretPopup({
         <View style={styles.container}>
           <Text style={styles.title}>Secret Nearby!</Text>
           <Text style={styles.desc}>
-            You&apos;ve sensed something mysterious near {quest.location.address}.
+            You&apos;ve sensed something mysterious near{' '}
+            {quest.location?.address || 'Unknown location'}.
           </Text>
           <Text style={styles.questTitle}>{quest.title}</Text>
           <View style={styles.actions}>

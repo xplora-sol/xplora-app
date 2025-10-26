@@ -16,7 +16,7 @@ export function EventsModal({
   const router = useRouter();
 
   return (
-    <Modal visible={visible} transparent animationType="slide">
+    <Modal visible={visible} transparent animationType="fade">
       <View style={styles.backdrop}>
         <View style={styles.container}>
           <View style={styles.header}>

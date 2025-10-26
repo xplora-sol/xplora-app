@@ -1,7 +1,15 @@
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { StyleSheet, View } from 'react-native';
+
+const CARD_GRADIENTS = [
+  ['#0ea5e9', '#7c3aed'],
+  ['#f97316', '#ef4444'],
+  ['#10b981', '#06b6d4'],
+  ['#f59e0b', '#f97316'],
+];
 
 interface StatItem {
   value: string | number;
@@ -17,14 +25,29 @@ export function ProgressStatsGrid({ stats }: ProgressStatsGridProps) {
     <ThemedView style={styles.statsSection}>
       {stats.map((row, rowIndex) => (
         <View key={rowIndex} style={styles.statsGrid}>
-          {row.map((stat, statIndex) => (
-            <ThemedView key={statIndex} style={styles.statCard}>
-              <ThemedText type="heading2">{stat.value}</ThemedText>
-              <ThemedText type="caption" style={styles.statLabel}>
-                {stat.label}
-              </ThemedText>
-            </ThemedView>
-          ))}
+          {row.map((stat, statIndex) => {
+            const gradient = CARD_GRADIENTS[(rowIndex * 2 + statIndex) % CARD_GRADIENTS.length];
+            return (
+              <LinearGradient
+                key={statIndex}
+                colors={gradient as [string, string]}
+                start={[0, 0]}
+                end={[1, 1]}
+                style={styles.statCardGradient}
+              >
+                <ThemedView
+                  style={styles.statCardContent}
+                  lightColor="transparent"
+                  darkColor="transparent"
+                >
+                  <ThemedText type="heading2">{stat.value}</ThemedText>
+                  <ThemedText type="caption" style={styles.statLabel}>
+                    {stat.label}
+                  </ThemedText>
+                </ThemedView>
+              </LinearGradient>
+            );
+          })}
         </View>
       ))}
     </ThemedView>
@@ -51,6 +74,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
+  },
+  statCardGradient: {
+    flex: 1,
+    borderRadius: 12,
+    padding: 0,
+  },
+  statCardContent: {
+    flex: 1,
+    padding: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   statLabel: {
     opacity: 0.7,

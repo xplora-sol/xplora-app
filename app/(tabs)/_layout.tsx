@@ -84,7 +84,7 @@ export default function TabLayout() {
           title: 'Leaderboard',
           tabBarIcon: ({ color, focused }) => (
             <View>
-              <Ionicons name={focused ? 'trophy' : 'trophy-outline'} size={24} color={color} />
+              <Ionicons name={focused ? 'people' : 'people-outline'} size={24} color={color} />
             </View>
           ),
         }}

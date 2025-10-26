@@ -203,7 +203,9 @@ export function QuestModal({ visible, quest, onClose }: QuestModalProps) {
           <ThemedText style={styles.description}>{quest.description}</ThemedText>
 
           <ThemedText style={styles.sectionTitle}>Location</ThemedText>
-          <ThemedText style={styles.location}>{quest.location.address}</ThemedText>
+          <ThemedText style={styles.location}>
+            {quest.location?.address || 'Unknown location'}
+          </ThemedText>
 
           {quest.verificationSteps && (
             <>
@@ -219,14 +221,14 @@ export function QuestModal({ visible, quest, onClose }: QuestModalProps) {
 
           <View style={styles.rewardContainer}>
             <ThemedText style={styles.rewardLabel}>Reward:</ThemedText>
-            <ThemedText style={styles.rewardValue}>{quest.reward} tokens</ThemedText>
+            <ThemedText style={styles.rewardValue}>{quest.reward ?? 0} tokens</ThemedText>
           </View>
 
           <QuestActionButton
             actionType={quest.actionType}
             actionLabel={quest.actionLabel}
             color={getActionColor(quest.actionType)}
-            onPress={() => handleAction(quest.actionType, quest.reward)}
+            onPress={() => handleAction(quest.actionType, quest.reward ?? 0)}
           />
 
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>

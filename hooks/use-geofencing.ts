@@ -56,7 +56,7 @@ export function useGeofencing({
       // Send notifications for nearby quests we haven't notified about yet
       nearbyQuests.forEach(({ quest, distance }) => {
         if (!notifiedQuestIdsRef.current.has(quest.id)) {
-          scheduleQuestNotification(quest.title, quest.reward, distance);
+          scheduleQuestNotification(quest.title, quest.reward ?? 0, distance);
           notifiedQuestIdsRef.current.add(quest.id);
         }
       });

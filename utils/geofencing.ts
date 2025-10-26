@@ -37,13 +37,15 @@ export function isQuestNearby(
   quest: Quest,
   radiusMeters: number = 50,
 ): { isNearby: boolean; distance: number } {
-  const distance = calculateDistance(
-    userLat,
-    userLon,
-    quest.location.latitude,
-    quest.location.longitude,
-  );
+  // Guard: if quest location is missing or invalid (0,0), treat as not nearby
+  const qLat = quest.location?.latitude;
+  const qLon = quest.location?.longitude;
 
+  if (!Number.isFinite(qLat) || !Number.isFinite(qLon) || (qLat === 0 && qLon === 0)) {
+    return { isNearby: false, distance: Number.MAX_SAFE_INTEGER };
+  }
+
+  const distance = calculateDistance(userLat, userLon, qLat, qLon);
   return {
     isNearby: distance <= radiusMeters,
     distance: Math.round(distance),

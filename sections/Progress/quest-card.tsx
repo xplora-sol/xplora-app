@@ -62,7 +62,7 @@ export function QuestCard({ quest }: QuestCardProps) {
                 {quest.title}
               </ThemedText>
               <ThemedText type="caption" style={styles.questLocation}>
-                📍 {quest.location.address}
+                📍 {quest.location?.address || 'Unknown location'}
               </ThemedText>
             </View>
             {quest.status === 'completed' && (
@@ -96,7 +96,7 @@ export function QuestCard({ quest }: QuestCardProps) {
               end={{ x: 1, y: 0 }}
               style={styles.rewardBadge}
             >
-              <Text style={styles.rewardText}>🪙 {quest.reward}</Text>
+              <Text style={styles.rewardText}>🪙 {quest.reward ?? 0}</Text>
             </LinearGradient>
           </View>
         </LinearGradient>

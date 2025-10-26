@@ -20,6 +20,7 @@ export function ThemedScrollView({
     <ScrollView
       style={[{ backgroundColor }, style]}
       contentContainerStyle={contentContainerStyle}
+      showsVerticalScrollIndicator={false}
       {...otherProps}
     />
   );

@@ -1,29 +1,21 @@
 import { useLeaderboards } from '@/hooks/query/use-leaderboard';
+import { getProfileImageForKey } from '@/utils/profile-images';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <Text style={styles.sectionTitle}>{children}</Text>;
 }
 
 function Avatar({ name, size = 40 }: { name: string; size?: number }) {
-  const initials = name
-    .split(' ')
-    .map((p) => p[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase();
-  const colors = ['#ffd166', '#9EE493', '#9b59b6', '#1abc9c'];
-  const bg = colors[name.length % colors.length];
+  // Use a deterministic profile image based on the username so the same user shows the same image
+  const source = getProfileImageForKey(name);
   return (
-    <View
-      style={[
-        styles.avatar,
-        { width: size, height: size, borderRadius: size / 2, backgroundColor: bg },
-      ]}
-    >
-      <Text style={[styles.avatarText, { fontSize: Math.round(size / 2.6) }]}>{initials}</Text>
-    </View>
+    <Image
+      source={source}
+      style={{ width: size, height: size, borderRadius: size / 2 }}
+      resizeMode="cover"
+    />
   );
 }
 
@@ -71,7 +63,7 @@ export function LeaderboardScreen() {
             <View style={{ flexDirection: 'row', alignItems: 'center', minWidth: 0 }}>
               <Avatar name={u.username} size={48} />
               <Text style={styles.player} numberOfLines={1} ellipsizeMode="tail">
-                 {u.username}
+                {u.username}
               </Text>
             </View>
             <Text style={styles.stat}>{u.completedQuests}</Text>
