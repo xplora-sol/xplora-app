@@ -7,6 +7,7 @@ interface QuestActionButtonProps {
   actionType: string;
   actionLabel: string;
   color: string;
+  disabled: boolean;
   onPress: () => void;
 }
 
@@ -14,10 +15,11 @@ export function QuestActionButton({
   actionType,
   actionLabel,
   color,
+  disabled,
   onPress,
 }: QuestActionButtonProps) {
   return (
-    <TouchableOpacity style={[styles.button, { backgroundColor: color }]} onPress={onPress}>
+    <TouchableOpacity disabled={disabled} style={[styles.button, { backgroundColor: color }]} onPress={onPress}>
       <ThemedText type="defaultSemiBold" style={styles.buttonText}>
         {getActionIcon(actionType)} {actionLabel}
       </ThemedText>

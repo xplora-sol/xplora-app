@@ -4,13 +4,12 @@ import { createAppKit, solana, solanaDevnet, solanaTestnet } from '@reown/appkit
 import { solanaAdapter } from './solana-adapter';
 import { PhantomConnector, SolflareConnector } from '@reown/appkit-solana-react-native';
 import * as Clipboard from 'expo-clipboard';
-
-const projectId = '5f4e68137d020aa12ca9851a70254c53';
+import { APPKIT_PROJECT_ID as projectId } from '../config-global';
 
 const IS_DEV = process.env.NODE_ENV === 'development';
 
 export const appKit = createAppKit({
-  projectId,
+  projectId: projectId!,
   networks: [solana, solanaDevnet, solanaTestnet],
   adapters: [solanaAdapter],
   storage: storage,

@@ -17,7 +17,7 @@ import { Countdown } from '@/components/ui/countdown';
 import { QuestBadge } from '@/components/ui/quest-badge';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Alert,
   Animated,
@@ -29,6 +29,7 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { GROUP_ID, PINATA_JWT } from '@/config-global';
 
 export default function QuestDetailsScreen() {
   const { questId } = useLocalSearchParams<{ questId: string }>();
@@ -37,8 +38,14 @@ export default function QuestDetailsScreen() {
   const { top } = useSafeAreaInsets();
   const { getQuestById, completeQuest } = useQuests();
   const quest = getQuestById(questId as string);
+
   // Events (for event quests)
   const { events } = useEvents();
+
+  // Local state for file upload
+  const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+
   const event = quest?.event ? events.find((e) => e.id === quest.event?.id) : undefined;
 
   // Animated pulse for reward badge (declared before early returns so hooks run consistently)
@@ -74,12 +81,76 @@ export default function QuestDetailsScreen() {
     );
   }
 
+  const uploadToPinata = async (imageUri: string) => {
+    setUploading(true);
+    setUploadProgress(0);
+
+    try {
+      // Create FormData
+      const formData = new FormData();
+
+      // Extract filename and create file object
+      const filename = imageUri.split('/').pop() || 'photo.jpg';
+      const match = /\.(\w+)$/.exec(filename);
+      const type = match ? `image/${match[1]}` : 'image/jpeg';
+
+      // Append file to FormData
+      formData.append('file', {
+        uri: imageUri,
+        type: type,
+        name: filename,
+      } as any);
+
+      // Append metadata
+      formData.append('network', 'public');
+      formData.append('name', `quest_${quest.id}_${Date.now()}`);
+      // formData.append('group_id', GROUP_ID!);
+      formData.append(
+        'keyvalues',
+        JSON.stringify({
+          app: 'Xplora',
+          questId: quest.id,
+          timestamp: Date.now().toString(),
+        }),
+      );
+
+      // Upload to Pinata
+      const response = await fetch('https://uploads.pinata.cloud/v3/files', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${PINATA_JWT}`,
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Upload failed');
+      }
+
+      const data = await response.json();
+      setUploadProgress(100);
+
+      return data;
+    } catch (error) {
+      console.error('Pinata upload error:', JSON.stringify(error));
+      Alert.alert(
+        'Upload Failed',
+        error instanceof Error ? JSON.stringify(error.message) : 'Failed to upload image',
+      );
+      return null;
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const openCamera = async (questId: string, reward: number) => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
     if (status !== 'granted') {
       Alert.alert('Permission Denied', 'Camera permission is required to take photos.');
       return;
     }
+
     const result = await ImagePicker.launchCameraAsync({
       mediaTypes: 'images',
       allowsEditing: true,
@@ -87,10 +158,24 @@ export default function QuestDetailsScreen() {
       quality: 0.8,
     });
 
-    if (!result.canceled) {
-      completeQuest(questId);
-      router.back();
-      Alert.alert('Success!', `Quest completed! You earned ${reward} tokens! 🎉`);
+    if (!result.canceled && result.assets[0]) {
+      const imageUri = result.assets[0].uri;
+
+      // Upload to Pinata
+      const uploadResult = await uploadToPinata(imageUri);
+
+      if (uploadResult) {
+        // Successfully uploaded
+        console.log('Upload successful:', uploadResult);
+        completeQuest(questId);
+        router.back();
+        Alert.alert(
+          'Success!',
+          `Quest completed! You earned ${reward} tokens! 🎉\n\nFile ID: ${
+            uploadResult.data?.id || 'N/A'
+          }`,
+        );
+      }
     }
   };
 
@@ -211,8 +296,6 @@ export default function QuestDetailsScreen() {
             </View>
           ) : null}
 
-          {/* dev button moved to Progress screen */}
-
           {quest?.rarity ? (
             <>
               <View style={styles.headerRowCompact}>
@@ -296,13 +379,32 @@ export default function QuestDetailsScreen() {
 
           <QuestActionButton
             actionType={quest.actionType}
-            actionLabel={quest.actionLabel}
+            actionLabel={uploading ? 'Uploading...' : quest.actionLabel}
             color={getActionColor(quest.actionType)}
             onPress={() => handleAction(quest.actionType, quest.reward ?? 0)}
+            disabled={uploading}
           />
+
+          {uploading && (
+            <View style={styles.uploadProgressWrap}>
+              <ThemedText style={styles.uploadProgressText}>
+                Uploading to Pinata... {uploadProgress}%
+              </ThemedText>
+              <View style={styles.progressBarBackground}>
+                <View
+                  style={[
+                    styles.progressBarFill,
+                    {
+                      width: `${uploadProgress}%`,
+                      backgroundColor: getActionColor(quest.actionType),
+                    },
+                  ]}
+                />
+              </View>
+            </View>
+          )}
         </View>
       </ScrollView>
-      {/* dev modal moved to Progress screen */}
     </LinearGradient>
   );
 }
@@ -392,7 +494,6 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: 999,
     zIndex: 20,
-    // subtle shadow so the pill sits above the badge visually
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.12,
@@ -423,6 +524,16 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   progressBarFill: { height: '100%', width: '20%', borderRadius: 8 },
+  uploadProgressWrap: {
+    marginTop: 16,
+    padding: 12,
+    backgroundColor: '#f3f4f6',
+    borderRadius: 8,
+  },
+  uploadProgressText: {
+    fontSize: 13,
+    color: '#6b7280',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
 });
-
-// dev styles removed (moved to Progress screen)
