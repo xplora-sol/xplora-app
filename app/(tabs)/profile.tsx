@@ -96,7 +96,7 @@ export default function ProfileScreen() {
         </View>
       </ThemedView>
 
-      <ThemedView style={styles.section}>
+      {/* <ThemedView style={styles.section}>
         <ThemedText type="subtitle" style={styles.sectionTitle}>
           Category Progress
         </ThemedText>
@@ -105,7 +105,7 @@ export default function ProfileScreen() {
             <CategoryProgressCard key={index} categoryStat={categoryStat} />
           ))}
         </View>
-      </ThemedView>
+      </ThemedView> */}
 
       <ThemedView style={styles.section}>
         <ThemedText type="subtitle" style={styles.sectionTitle}>
