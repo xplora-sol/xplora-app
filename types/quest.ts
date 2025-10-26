@@ -1,5 +1,5 @@
-import { Achievement } from "./achievements";
-import { UserStats } from "./user";
+import { Achievement } from './achievements';
+import { UserStats } from './user';
 
 export interface QuizQuestion {
   question: string;

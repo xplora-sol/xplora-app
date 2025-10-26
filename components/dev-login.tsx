@@ -1,31 +1,14 @@
-import { useQuests } from '@/hooks/query/use-quests';
-
-import { Alert, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { ThemedText } from './themed-text';
 import { ThemedView } from './themed-view';
+import { useAuth } from '@/hooks/query/use-auth';
+import { router } from 'expo-router';
 
-export function DevTools() {
-  const { resetProgress } = useQuests();
-
+export function DevLogin() {
+  const { login } = useAuth();
   const handleReset = () => {
-    Alert.alert(
-      'Reset Progress',
-      'Are you sure you want to reset all your progress? This will reset all quests, tokens, and achievements.',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Reset',
-          style: 'destructive',
-          onPress: async () => {
-            await resetProgress();
-            Alert.alert('Success', 'Progress has been reset!');
-          },
-        },
-      ],
-    );
+    login({ walletAddress: '0xTEST', username: 'DEVELOPER' });
+    router.replace("/(auth)/onboarding")
   };
 
   // Only show in development mode
@@ -38,7 +21,7 @@ export function DevTools() {
       </ThemedText>
       <TouchableOpacity style={styles.button} onPress={handleReset}>
         <ThemedText type="defaultSemiBold" style={styles.buttonText}>
-          Reset Progress
+          Dev Login
         </ThemedText>
       </TouchableOpacity>
     </ThemedView>
