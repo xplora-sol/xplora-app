@@ -1,0 +1,39 @@
+{
+  "events": [
+    {
+      "id": "ancient_path_event",
+      "title": "The Ancient Path",
+      "description": "A three-chapter mystery unravels across the city. Complete each chapter to reveal the final reward.",
+      "start": "2025-10-20T00:00:00.000Z",
+      "end": "2025-11-30T23:59:59.999Z",
+      "featuredQuestIds": ["story_ancient_path_1", "story_ancient_path_2", "story_ancient_path_3"],
+      "fomoText": "Limited time — uncover the mystery before it's gone!",
+      "bannerColor": "#9b59b6",
+      "bannerImage": "ancient_path_banner.png"
+    },
+    {
+      "id": "spring_fair",
+      "title": "Spring Fair",
+      "description": "Celebrate local culture with time-limited quests and special rewards.",
+      "start": "2025-11-01T00:00:00.000Z",
+      "end": "2025-11-07T23:59:59.999Z",
+      "featuredQuestIds": ["event_spring_fair_001"],
+      "fomoText": "Happening now — double rewards for early birds!",
+      "bannerColor": "#f39c12",
+      "bannerImage": "spring_fair_banner.png"
+    },
+    {
+      "id": "hidden_shrine_event",
+      "title": "Secret Shrine",
+      "description": "A secret ceremony is whispered about. Find the hidden shrine nearby to unlock its rewards.",
+      "start": "2025-10-20T00:00:00.000Z",
+      "end": "2025-12-31T23:59:59.999Z",
+      "featuredQuestIds": ["hidden_shrine_quest"],
+      "fomoText": "Shh... something secret is nearby.",
+      "bannerColor": "#2ecc71",
+      "bannerImage": "hidden_shrine_banner.png",
+      "hidden": true,
+      "location": { "latitude": 27.7135, "longitude": 85.315, "address": "Hidden Shrine" }
+    }
+  ]
+}

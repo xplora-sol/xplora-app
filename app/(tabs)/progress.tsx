@@ -1,6 +1,9 @@
 import { ThemedScrollView } from '@/components/themed-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
+import { EventsBanner } from '@/components/ui/events-banner';
+import { EventsModal } from '@/components/ui/events-modal';
+import { useEvents } from '@/hooks/query/use-events';
 import { useQuestStatsQuery, useQuests } from '@/hooks/query/use-quests';
 import { ProgressStatsGrid } from '@/sections/Profile/progress-stats-grid';
 import { FilterButtons } from '@/sections/Progress/filter-buttons';
@@ -8,13 +11,15 @@ import { ProgressBar } from '@/sections/Progress/progress-bar';
 import { QuestCard } from '@/sections/Progress/quest-card';
 import type { Quest } from '@/types/quest';
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 export default function ProgressScreen() {
   const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all');
 
   const { activeQuests, completedQuests, completionRate, totalTokens } = useQuestStatsQuery();
   const { quests } = useQuests();
+  const { activeEvents } = useEvents();
+  const [eventsModalVisible, setEventsModalVisible] = useState(false);
   const totalPossibleTokens = quests.reduce((sum, q) => sum + q.reward, 0);
 
   const getFilteredQuests = () => {
@@ -48,6 +53,17 @@ export default function ProgressScreen() {
         </ThemedText>
       </ThemedView>
 
+      {activeEvents.length > 0 ? (
+        <View style={{ paddingHorizontal: 20 }}>
+          <EventsBanner
+            title={activeEvents[0].title}
+            endIso={activeEvents[0].end}
+            color={activeEvents[0].bannerColor}
+            onPress={() => setEventsModalVisible(true)}
+          />
+        </View>
+      ) : null}
+
       <ProgressStatsGrid stats={statsData} />
 
       <ProgressBar current={totalTokens} total={totalPossibleTokens} label="Overall Progress" />
@@ -63,6 +79,11 @@ export default function ProgressScreen() {
           <QuestCard key={quest.id} quest={quest as Quest} />
         ))}
       </ThemedView>
+      <EventsModal
+        visible={eventsModalVisible}
+        events={activeEvents}
+        onClose={() => setEventsModalVisible(false)}
+      />
     </ThemedScrollView>
   );
 }

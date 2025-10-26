@@ -1,5 +1,12 @@
 export interface AchievementRequirement {
-  type: 'completed_quests' | 'tokens_earned' | 'all_categories';
+  type:
+    | 'completed_quests'
+    | 'tokens_earned'
+    | 'all_categories'
+    | 'event_participation'
+    | 'story_completed'
+    | 'streak_days'
+    | 'rarity_completed';
   value: number | null;
 }
 

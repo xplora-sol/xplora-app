@@ -20,7 +20,9 @@
         "Take a photo at the coffee shop",
         "Make sure the coffee shop name is visible",
         "Upload the photo to complete"
-      ]
+      ],
+      "rarity": "common",
+      "multiplier": 1
     },
     {
       "id": "quest_002",
@@ -106,7 +108,9 @@
           "options": ["Buddha's all-seeing eyes", "Protection", "Wisdom", "Peace"],
           "correctAnswer": "Buddha's all-seeing eyes"
         }
-      ]
+      ],
+      "rarity": "common",
+      "multiplier": 1
     },
     {
       "id": "quest_005",
@@ -198,7 +202,144 @@
         "Make a purchase",
         "Write a review (min 50 characters)",
         "Share your experience"
-      ]
+      ],
+      "rarity": "common",
+      "multiplier": 1
+    },
+    {
+      "id": "daily_001",
+      "title": "Daily Check-In",
+      "description": "Check in today to earn a small token bonus. Repeatable daily.",
+      "location": {
+        "latitude": 27.7124,
+        "longitude": 85.3115,
+        "address": "Anywhere"
+      },
+      "reward": 10,
+      "difficulty": "easy",
+      "category": "daily",
+      "status": "active",
+      "completionCriteria": "Open the app and check in once today",
+      "actionType": "review",
+      "actionLabel": "Check In",
+      "verificationSteps": ["Open the app", "Tap Check In"],
+      "repeatable": true,
+      "daily": true,
+      "rarity": "common",
+      "multiplier": 1
+    },
+    {
+      "id": "event_spring_fair_001",
+      "title": "Spring Fair Limited Quest",
+      "description": "Limited time event quest — visit the Spring Fair and capture a moment. This quest is available for a short window.",
+      "location": {
+        "latitude": 27.715,
+        "longitude": 85.313,
+        "address": "Spring Fair Grounds"
+      },
+      "reward": 200,
+      "difficulty": "medium",
+      "category": "event",
+      "status": "active",
+      "completionCriteria": "Take a photo at the fair during the event window",
+      "actionType": "photo",
+      "actionLabel": "Capture",
+      "verificationSteps": [
+        "Arrive during the Spring Fair",
+        "Take a clear photo",
+        "Upload as proof"
+      ],
+      "limitedTime": {
+        "start": "2025-11-01T00:00:00.000Z",
+        "end": "2025-11-07T23:59:59.999Z"
+      },
+      "rarity": "rare",
+      "multiplier": 1.5
+    },
+    {
+      "id": "story_ancient_path_1",
+      "title": "Ancient Path — Chapter 1",
+      "description": "A mysterious letter appears in town. Begin the story by visiting the old gate.",
+      "location": {
+        "latitude": 27.71,
+        "longitude": 85.31,
+        "address": "Old Gate"
+      },
+      "reward": 80,
+      "difficulty": "easy",
+      "category": "story",
+      "status": "active",
+      "completionCriteria": "Visit the Old Gate and take a photo of the plaque",
+      "actionType": "photo",
+      "actionLabel": "Investigate",
+      "verificationSteps": ["Find the Old Gate", "Take a photo"],
+      "event": { "id": "ancient_path", "step": 1, "totalSteps": 3, "isStory": true },
+      "rarity": "epic",
+      "multiplier": 2
+    },
+    {
+      "id": "story_ancient_path_2",
+      "title": "Ancient Path — Chapter 2",
+      "description": "Follow the footsteps left in the alley. The next clue awaits.",
+      "location": {
+        "latitude": 27.711,
+        "longitude": 85.311,
+        "address": "Old Alley"
+      },
+      "reward": 120,
+      "difficulty": "medium",
+      "category": "story",
+      "status": "active",
+      "completionCriteria": "Collect the hidden token and photograph it",
+      "actionType": "photo",
+      "actionLabel": "Collect Token",
+      "verificationSteps": ["Search alley", "Collect token", "Take photo"],
+      "event": { "id": "ancient_path", "step": 2, "totalSteps": 3, "isStory": true },
+      "rarity": "epic",
+      "multiplier": 2
+    },
+    {
+      "id": "story_ancient_path_3",
+      "title": "Ancient Path — Finale",
+      "description": "The secret is revealed at the old shrine. Complete the final ritual.",
+      "location": {
+        "latitude": 27.712,
+        "longitude": 85.312,
+        "address": "Old Shrine"
+      },
+      "reward": 300,
+      "difficulty": "hard",
+      "category": "story",
+      "status": "active",
+      "completionCriteria": "Perform ritual and capture the moment",
+      "actionType": "photo",
+      "actionLabel": "Reveal",
+      "verificationSteps": ["Reach shrine", "Perform steps", "Take photo"],
+      "event": { "id": "ancient_path", "step": 3, "totalSteps": 3, "isStory": true },
+      "rarity": "legendary",
+      "multiplier": 3
+    },
+    {
+      "id": "hidden_shrine_quest",
+      "title": "Hidden Shrine Discovery",
+      "description": "A whisper tells of a hidden shrine nearby. Discover it to claim the reward.",
+      "location": {
+        "latitude": 27.7135,
+        "longitude": 85.315,
+        "address": "Hidden Shrine"
+      },
+      "reward": 400,
+      "difficulty": "hard",
+      "category": "story",
+      "status": "active",
+      "hidden": true,
+      "completionCriteria": "Find the hidden shrine and take a photo",
+      "actionType": "photo",
+      "actionLabel": "Discover",
+      "verificationSteps": ["Locate shrine", "Take photo"],
+      "event": { "id": "hidden_shrine_event", "step": 1, "totalSteps": 1, "isStory": true },
+      "rarity": "legendary",
+      "multiplier": 4
     }
   ]
 }

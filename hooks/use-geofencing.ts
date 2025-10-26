@@ -1,5 +1,5 @@
 import type { Quest } from '@/types/quest';
-import { findNearbyQuests } from '@/utils/geofencing';
+import { findNearbyHiddenQuests, findNearbyQuests } from '@/utils/geofencing';
 import { scheduleQuestNotification } from '@/utils/notifications';
 import * as Location from 'expo-location';
 import { useEffect, useRef } from 'react';
@@ -10,6 +10,8 @@ interface UseGeofencingOptions {
   userLocation: { latitude: number; longitude: number } | null;
   quests: Quest[];
   onLocationUpdate?: (coords: { latitude: number; longitude: number }) => void;
+  // Called when a hidden quest is discovered nearby (best-effort)
+  onHiddenFound?: (data: { questId: string; distance: number }) => void;
 }
 
 /**
@@ -21,9 +23,11 @@ export function useGeofencing({
   userLocation,
   quests,
   onLocationUpdate,
+  onHiddenFound,
 }: UseGeofencingOptions) {
   // Track which quests we've already notified about using ref to avoid re-renders
   const notifiedQuestIdsRef = useRef<Set<string>>(new Set());
+  const notifiedHiddenIdsRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
     if (!enabled || !userLocation) {
@@ -64,6 +68,29 @@ export function useGeofencing({
           notifiedQuestIdsRef.current.delete(id);
         }
       });
+
+      // Check for hidden quests using a slightly larger radius for discovery
+      const nearbyHidden = findNearbyHiddenQuests(
+        newCoords.latitude,
+        newCoords.longitude,
+        quests,
+        Math.max(radiusMeters, 100),
+      );
+
+      nearbyHidden.forEach((item: { quest: Quest; distance: number }) => {
+        const { quest: hQuest, distance: hDistance } = item;
+        if (!notifiedHiddenIdsRef.current.has(hQuest.id)) {
+          // Notify parent that a hidden quest is nearby (UI can present a secret popup)
+          onHiddenFound?.({ questId: hQuest.id, distance: hDistance });
+          notifiedHiddenIdsRef.current.add(hQuest.id);
+        }
+      });
+
+      // Remove hidden notifications if moved away
+      const hiddenIds = new Set(nearbyHidden.map((item) => item.quest.id));
+      notifiedHiddenIdsRef.current.forEach((id) => {
+        if (!hiddenIds.has(id)) notifiedHiddenIdsRef.current.delete(id);
+      });
     };
 
     (async () => {
@@ -87,5 +114,5 @@ export function useGeofencing({
         locationSubscription.remove();
       }
     };
-  }, [enabled, radiusMeters, userLocation, quests, onLocationUpdate]);
+  }, [enabled, radiusMeters, userLocation, quests, onLocationUpdate, onHiddenFound]);
 }

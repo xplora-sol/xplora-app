@@ -1,5 +1,10 @@
 import { ThemedText } from '@/components/themed-text';
+import { DailiesModal } from '@/components/ui/dailies-modal';
+import { EventsModal } from '@/components/ui/events-modal';
+import { FloatingCircleButton } from '@/components/ui/floating-circle-button';
+import { SecretPopup } from '@/components/ui/secret-popup';
 import { GameColors } from '@/constants/theme';
+import { useEvents } from '@/hooks/query/use-events';
 import { useQuests, useQuestStatsQuery } from '@/hooks/query/use-quests';
 import { useGeofencing } from '@/hooks/use-geofencing';
 import { useLocationTracking } from '@/hooks/use-location-tracking';
@@ -86,12 +91,31 @@ export default function MapScreen() {
   const { top } = useSafeAreaInsets();
   const router = useRouter();
 
-  const { quests } = useQuests();
+  const { quests, revealHidden, getQuestById } = useQuests();
   const { activeQuests } = useQuestStatsQuery();
+  const { activeEvents } = useEvents();
   const { userLocation: initialLocation, loading } = useLocationTracking();
   const [userLocation, setUserLocation] = useState(initialLocation);
 
   const notificationSettings = useNotificationPermissions();
+
+  // Secret popup state
+  const [secretVisible, setSecretVisible] = useState(false);
+  const [secretQuest, setSecretQuest] = useState<Quest | null>(null);
+
+  const handleHiddenFound = async ({
+    questId,
+    distance,
+  }: {
+    questId: string;
+    distance: number;
+  }) => {
+    // Try to find quest locally
+    const q = getQuestById(questId) || quests.find((qq) => qq.id === questId) || null;
+    if (!q) return;
+    setSecretQuest(q);
+    setSecretVisible(true);
+  };
 
   useGeofencing({
     enabled: notificationSettings.enabled,
@@ -99,6 +123,7 @@ export default function MapScreen() {
     userLocation,
     quests: quests as Quest[],
     onLocationUpdate: setUserLocation,
+    onHiddenFound: handleHiddenFound,
   });
 
   const [region, setRegion] = useState<Region>({
@@ -149,6 +174,9 @@ export default function MapScreen() {
       }
     }
   };
+
+  const [eventsModalVisible, setEventsModalVisible] = useState(false);
+  const [dailiesModalVisible, setDailiesModalVisible] = useState(false);
 
   if (loading) {
     return (
@@ -245,6 +273,55 @@ export default function MapScreen() {
         </View>
       </View>
 
+      {/* Floating buttons: Events (above) and Dailies (below) */}
+      <View style={styles.floatingButtonsContainer} pointerEvents="box-none">
+        {activeEvents.length > 0 ? (
+          <View style={styles.floatingButtonItem}>
+            <FloatingCircleButton
+              label="E"
+              size={56}
+              imageSrc={require('@/assets/images/events_button.png')}
+              onPress={() => setEventsModalVisible(true)}
+            />
+          </View>
+        ) : null}
+
+        <View style={[styles.floatingButtonItem, { marginTop: 12 }]}>
+          <FloatingCircleButton
+            label="D"
+            size={56}
+            imageSrc={require('@/assets/images/dailies_button.png')}
+            onPress={() => setDailiesModalVisible(true)}
+          />
+        </View>
+      </View>
+
+      <EventsModal
+        visible={eventsModalVisible}
+        events={activeEvents}
+        onClose={() => setEventsModalVisible(false)}
+      />
+      <DailiesModal visible={dailiesModalVisible} onClose={() => setDailiesModalVisible(false)} />
+
+      <SecretPopup
+        visible={secretVisible}
+        quest={secretQuest}
+        onClose={() => {
+          setSecretVisible(false);
+          setSecretQuest(null);
+        }}
+        onReveal={async (questId: string) => {
+          try {
+            await revealHidden(questId);
+            setSecretVisible(false);
+            // navigate to quest details
+            router.push({ pathname: '/quest-details', params: { questId } });
+          } catch (err) {
+            console.error('Error revealing hidden quest', err);
+          }
+        }}
+      />
+
       {/* Location Button - simple, no animation */}
       <TouchableOpacity
         style={styles.locationButton}
@@ -319,5 +396,24 @@ const styles = StyleSheet.create({
     right: 0,
     height: 100,
     backgroundColor: 'transparent',
+  },
+  eventsContainer: {
+    position: 'absolute',
+    top: 110,
+    left: 16,
+    right: 16,
+    zIndex: 30,
+  },
+  floatingButtonsContainer: {
+    position: 'absolute',
+    bottom: 170,
+    right: 20,
+    zIndex: 50,
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  floatingButtonItem: {
+    width: 56,
+    height: 56,
   },
 });

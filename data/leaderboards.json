@@ -1,0 +1,63 @@
+{
+  "globalAllTime": {
+    "byQuestsCompleted": [
+      { "userId": "user_005", "username": "TokenCollector", "completedQuests": 8 },
+      { "userId": "user_002", "username": "KathmanduExplorer", "completedQuests": 5 },
+      { "userId": "user_001", "username": "QuestMaster", "completedQuests": 3 }
+    ],
+    "byXpEarned": [
+      { "userId": "user_005", "username": "TokenCollector", "xp": 750 },
+      { "userId": "user_002", "username": "KathmanduExplorer", "xp": 450 },
+      { "userId": "user_001", "username": "QuestMaster", "xp": 250 }
+    ]
+  },
+  "seasonal": {
+    "currentSeason": "season_2025_q4",
+    "seasons": [
+      {
+        "id": "season_2025_q4",
+        "name": "Autumn Sprint 2025",
+        "start": "2025-10-01T00:00:00.000Z",
+        "end": "2025-12-31T23:59:59.000Z",
+        "winner": { "userId": "user_005", "username": "TokenCollector" },
+        "standings": [
+          { "rank": 1, "userId": "user_005", "username": "TokenCollector", "points": 1200 },
+          { "rank": 2, "userId": "user_002", "username": "KathmanduExplorer", "points": 980 },
+          { "rank": 3, "userId": "user_001", "username": "QuestMaster", "points": 640 }
+        ],
+        "onChainMetadata": {
+          "contract": "0xSeasonContract",
+          "tokenId": "1234",
+          "uri": "ipfs://season_2025_q4"
+        }
+      }
+    ]
+  },
+  "locationBased": {
+    "Kathmandu": [
+      { "rank": 1, "userId": "user_002", "username": "KathmanduExplorer", "score": 520 },
+      { "rank": 2, "userId": "user_004", "username": "NepalNomad", "score": 210 }
+    ],
+    "Pokhara": [{ "rank": 1, "userId": "user_005", "username": "TokenCollector", "score": 610 }]
+  },
+  "questSpecific": {
+    "quest_001": {
+      "fastestCompletions": [
+        { "rank": 1, "userId": "user_005", "username": "TokenCollector", "timeSeconds": 42 },
+        { "rank": 2, "userId": "user_002", "username": "KathmanduExplorer", "timeSeconds": 58 }
+      ],
+      "mostCreative": [{ "rank": 1, "userId": "user_001", "username": "QuestMaster", "votes": 24 }]
+    }
+  },
+  "streakLeaders": {
+    "currentLongest": { "userId": "user_002", "username": "KathmanduExplorer", "days": 12 },
+    "allTimeLongest": { "userId": "user_001", "username": "QuestMaster", "days": 34 }
+  },
+  "recentActivity": {
+    "last7Days": [
+      { "userId": "user_005", "username": "TokenCollector", "activityCount": 18 },
+      { "userId": "user_002", "username": "KathmanduExplorer", "activityCount": 14 },
+      { "userId": "user_001", "username": "QuestMaster", "activityCount": 9 }
+    ]
+  }
+}

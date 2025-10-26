@@ -82,3 +82,21 @@ export function findNearbyQuests(
   // Sort by distance (closest first)
   return nearbyQuests.sort((a, b) => a.distance - b.distance);
 }
+
+/**
+ * Find nearby hidden quests regardless of their status (quest.hidden === true)
+ */
+export function findNearbyHiddenQuests(
+  userLat: number,
+  userLon: number,
+  quests: Quest[],
+  radiusMeters: number = 100,
+): { quest: Quest; distance: number }[] {
+  const nearby: { quest: Quest; distance: number }[] = [];
+  for (const quest of quests) {
+    if (!quest.hidden) continue;
+    const { isNearby, distance } = isQuestNearby(userLat, userLon, quest, radiusMeters);
+    if (isNearby) nearby.push({ quest, distance });
+  }
+  return nearby.sort((a, b) => a.distance - b.distance);
+}

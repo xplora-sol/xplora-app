@@ -12,6 +12,8 @@ import { getActionColor, getDifficultyColor } from '@/utils/quest-helpers';
 import * as ImagePicker from 'expo-image-picker';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 
+import { Countdown } from '@/components/ui/countdown';
+import { QuestBadge } from '@/components/ui/quest-badge';
 import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -194,6 +196,20 @@ export default function QuestDetailsScreen() {
             {quest.title}
           </ThemedText>
 
+          <View style={styles.badgeRow}>
+            <QuestBadge
+              label={quest.rarity?.toUpperCase()}
+              rarity={quest.rarity as any}
+              multiplier={quest.multiplier}
+              isLimited={!!quest.limitedTime}
+            />
+            {quest.limitedTime?.end ? (
+              <View style={{ marginLeft: 8 }}>
+                <Countdown endIso={quest.limitedTime.end} />
+              </View>
+            ) : null}
+          </View>
+
           <QuestBadges
             difficulty={quest.difficulty}
             difficultyColor={getDifficultyColor(quest.difficulty)}
@@ -242,5 +258,10 @@ const styles = StyleSheet.create({
   },
   title: {
     marginBottom: 16,
+  },
+  badgeRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
   },
 });

@@ -59,6 +59,46 @@
         "type": "tokens_earned",
         "value": 500
       }
+    },
+    {
+      "id": "event_participant",
+      "emoji": "🎟️",
+      "title": "Event Participant",
+      "description": "Participate in a limited-time event quest",
+      "requirement": {
+        "type": "event_participation",
+        "value": 1
+      }
+    },
+    {
+      "id": "story_seeker",
+      "emoji": "📜",
+      "title": "Story Seeker",
+      "description": "Complete a multi-step story quest",
+      "requirement": {
+        "type": "story_completed",
+        "value": 1
+      }
+    },
+    {
+      "id": "daily_streak_7",
+      "emoji": "🔥",
+      "title": "7-Day Streak",
+      "description": "Check in daily for 7 consecutive days",
+      "requirement": {
+        "type": "streak_days",
+        "value": 7
+      }
+    },
+    {
+      "id": "rare_hunter",
+      "emoji": "🦄",
+      "title": "Rare Hunter",
+      "description": "Complete 3 rare or limited quests",
+      "requirement": {
+        "type": "rarity_completed",
+        "value": 3
+      }
     }
   ]
 }

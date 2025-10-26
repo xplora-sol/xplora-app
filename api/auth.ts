@@ -33,6 +33,11 @@ export const authApi = {
         completedQuestsCount: 0,
         level: 1,
         memberSince: new Date().toISOString(),
+        currentStreak: 0,
+        lastCheckIn: null,
+        eventParticipationCount: 0,
+        storyCompletions: {},
+        rarityCompletedCounts: {},
       },
     };
 
